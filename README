@@ -1,0 +1,45 @@
+==========================================================
+Kolab/Horde continuous integration setup (based on Hudson)
+==========================================================
+
+Introduction
+~~~~~~~~~~~~
+
+This provides the Kolab/Horde continuous integration setup. It allows
+to generate Horde packages for the Kolab server.
+
+Requirements
+~~~~~~~~~~~~
+
+Before installing this you need to have the following software
+installed:
+
+ - Kolab server
+ - Make
+ - PHP with the xdebug extension
+ - PEAR
+ - Java (Sun JDK)
+ - Ant
+
+Installation
+~~~~~~~~~~~~
+
+Simply run
+
+ make install
+
+followed by
+
+ make start
+
+Now you should be able to connect to http://localhost:8080. You should
+now be able to login as a local user on your system. Finally you need
+to trigger the build on the "php-hudson-tools" jobs.
+
+Usage
+~~~~~
+
+Notes
+~~~~~
+
+
