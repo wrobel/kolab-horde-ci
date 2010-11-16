@@ -1,13 +1,13 @@
 # Variables
-%define         V_package Horde_Translation-H4
-%define         V_pear_package Translation
-%define         V_package_url http://pear.horde.org/Translation
+%define         V_package Horde_Test-H4
+%define         V_pear_package Test
+%define         V_package_url http://pear.horde.org/Test
 %define         V_version 0.1.0dev201011161411
 %define         V_release 1
 %define         V_sourceurl http://files.kolab.org/incoming/wrobel/Horde4
 %define         V_php_lib_loc php-h4
 %define         V_www_loc NONE
-%define         V_summary Horde translation library
+%define         V_summary Horde testing base classes
 %define         V_license LGPL
 
 # Package Information
@@ -38,13 +38,13 @@ BuildPreReq:  PEAR-Horde-Channel
 PreReq:       OpenPKG, openpkg >= 20070603
 PreReq:       php, php::with_pear = yes
 PreReq:       PEAR-Horde-Channel
-PreReq: Horde_Test-H4
+PreReq: PHPUnit
 
 # Package options
 %option       with_chroot              no
 
 %description 
-.
+The Horde_Test:: class provides Horde-specific PHPUnit base classes
 
 %prep
 	%setup -n %{V_pear_package}-%{V_version}

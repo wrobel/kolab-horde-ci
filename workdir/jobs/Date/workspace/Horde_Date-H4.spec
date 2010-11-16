@@ -1,13 +1,13 @@
 # Variables
-%define         V_package Horde_Translation-H4
-%define         V_pear_package Translation
-%define         V_package_url http://pear.horde.org/Translation
-%define         V_version 0.1.0dev201011161411
+%define         V_package Horde_Date-H4
+%define         V_pear_package Date
+%define         V_package_url http://pear.horde.org/Date
+%define         V_version 0.3.0dev201011161451
 %define         V_release 1
 %define         V_sourceurl http://files.kolab.org/incoming/wrobel/Horde4
 %define         V_php_lib_loc php-h4
 %define         V_www_loc NONE
-%define         V_summary Horde translation library
+%define         V_summary Horde Date package
 %define         V_license LGPL
 
 # Package Information
@@ -38,13 +38,15 @@ BuildPreReq:  PEAR-Horde-Channel
 PreReq:       OpenPKG, openpkg >= 20070603
 PreReq:       php, php::with_pear = yes
 PreReq:       PEAR-Horde-Channel
+PreReq: Horde_Nls-H4
+PreReq: Horde_Translation-H4
 PreReq: Horde_Test-H4
 
 # Package options
 %option       with_chroot              no
 
 %description 
-.
+Package for creating and manipulating dates.
 
 %prep
 	%setup -n %{V_pear_package}-%{V_version}

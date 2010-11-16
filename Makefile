@@ -45,7 +45,14 @@ DEPENDENCIES=PEAR-PEAR-H4 \
              PEAR-PHPUnit-Channel-H4 \
              PHPUnit-H4
 
-JOBS=Translation
+JOBS=Auth \
+     Date \
+     Exception \
+     Nls \
+     Test \
+     Translation \
+     Url \
+     Util
 
 .PHONY:install
 install: hudson-war hudson-plugins kolab-dependencies
@@ -113,6 +120,8 @@ $(JOBS:%=job-%):
 	sed -i -e 's/@NAME@/Horde_$(@:job-%=%)-H4/g' workdir/jobs/$(@:job-%=%)/config.xml
 	mkdir -p workdir/jobs/$(@:job-%=%)/workspace/
 	touch workdir/jobs/$(@:job-%=%)/workspace/package.patch
+	echo "*.tgz" > workdir/jobs/$(@:job-%=%)/workspace/.gitignore
+	cp workdir/jobs/Role/.gitignore workdir/jobs/$(@:job-%=%)/.gitignore
 
 .PHONY:start
 start:
