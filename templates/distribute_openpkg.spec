@@ -85,7 +85,7 @@ foreach ($ext_deps as $dep) {
 	cat ../package.xml | sed -e 's/md5sum="[^"]*"//' > package.xml
 
         if [ -n "`cat %{PATCH0}`" ]; then
-	    %patch -p3 -P 0
+	    %patch -p1 -P 0
 	fi
 
 %build

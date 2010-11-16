@@ -2,7 +2,7 @@
 %define         V_package Horde_Role
 %define         V_pear_package Role
 %define         V_package_url http://pear.horde.org/Role
-%define         V_version 0.2.0dev201011160741
+%define         V_version 0.2.0dev201011160826
 %define         V_release 1
 %define         V_sourceurl http://files.kolab.org/incoming/wrobel/Horde4
 %define         V_php_lib_loc php
@@ -52,7 +52,7 @@ This package provides a method for PEAR to install Horde
 	cat ../package.xml | sed -e 's/md5sum="[^"]*"//' > package.xml
 
         if [ -n "`cat %{PATCH0}`" ]; then
-	    %patch -p3 -P 0
+	    %patch -p1 -P 0
 	fi
 
 %build

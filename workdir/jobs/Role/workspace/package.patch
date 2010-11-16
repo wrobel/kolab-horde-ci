@@ -1,0 +1,22 @@
+--- a/package.xml	2010-11-16 08:20:33.000000000 +0000
++++ b/package.xml	2010-11-16 08:21:07.879156902 +0000
+@@ -27,18 +27,7 @@
+  </notes>
+  <contents>
+   <dir name="/">
+-   <file  name="Horde/Role.php" role="php">
+-    <tasks:postinstallscript>
+-     <tasks:paramgroup>
+-      <tasks:id>first</tasks:id>
+-      <tasks:param>
+-       <tasks:name>horde_dir</tasks:name>
+-       <tasks:prompt>Filesystem location where the Horde application is installed.</tasks:prompt>
+-       <tasks:type>string</tasks:type>
+-      </tasks:param>
+-     </tasks:paramgroup>
+-    </tasks:postinstallscript>
+-   </file>
++   <file  name="Horde/Role.php" role="php" />
+    <file  name="Horde.php" role="php" />
+    <file  name="Horde.xml" role="php" />
+   </dir>
