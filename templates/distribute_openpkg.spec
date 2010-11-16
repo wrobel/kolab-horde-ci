@@ -104,7 +104,7 @@ foreach ($ext_deps as $dep) {
         fi
         env PHP_PEAR_PHP_BIN="%{l_prefix}/bin/php -d safe_mode=off -d memory_limit=40M"\
             PHP_PEAR_CACHE_DIR="/tmp/pear/cache"                                       \
-	    %{l_prefix}/bin/pear -d www_dir="%{l_prefix}/var/kolab/www/%{V_www_loc}"   \
+	    %{l_prefix}/bin/pear -d horde_dir="%{l_prefix}/var/kolab/www/client4"      \
 	                         -d bin_dir="%{l_prefix}/$PHP_BIN_DIR"                 \
 	                         -d php_dir="%{l_prefix}/lib/%{V_php_lib_loc}"         \
 	                         -d doc_dir="%{l_prefix}/lib/%{V_php_lib_loc}/doc"     \

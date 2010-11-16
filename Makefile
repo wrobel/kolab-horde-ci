@@ -46,10 +46,29 @@ DEPENDENCIES=PEAR-PEAR-H4 \
              PHPUnit-H4
 
 JOBS=Auth \
+     Autoloader \
+     Browser \
+     Cache \
+     Cli \
+     Constraint \
+     Core \
      Date \
      Exception \
+     Injector \
+     Log \
+     LoginTasks \
+     Mail \
+     Mime \
      Nls \
+     Notification \
+     Prefs \
+     Serialize \
+     SessionHandler \
+     Stream_Filter \
+     Stream_Wrapper \
+     Support \
      Test \
+     Token \
      Translation \
      Url \
      Util

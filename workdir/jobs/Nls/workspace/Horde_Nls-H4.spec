@@ -2,7 +2,7 @@
 %define         V_package Horde_Nls-H4
 %define         V_pear_package Nls
 %define         V_package_url http://pear.horde.org/Nls
-%define         V_version 0.1.0dev201011161451
+%define         V_version 0.1.0dev201011161630
 %define         V_release 1
 %define         V_sourceurl http://files.kolab.org/incoming/wrobel/Horde4
 %define         V_php_lib_loc php-h4
