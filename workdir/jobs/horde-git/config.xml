@@ -29,6 +29,7 @@
     </branches>
     <localBranch></localBranch>
     <mergeOptions/>
+    <recursiveSubmodules>false</recursiveSubmodules>
     <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
     <authorOrCommitter>false</authorOrCommitter>
     <clean>false</clean>
@@ -50,15 +51,6 @@
   </triggers>
   <concurrentBuild>false</concurrentBuild>
   <builders/>
-  <publishers>
-    <hudson.tasks.BuildTrigger>
-      <childProjects></childProjects>
-      <threshold>
-        <name>SUCCESS</name>
-        <ordinal>0</ordinal>
-        <color>BLUE</color>
-      </threshold>
-    </hudson.tasks.BuildTrigger>
-  </publishers>
+  <publishers/>
   <buildWrappers/>
 </project>

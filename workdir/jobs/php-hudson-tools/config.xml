@@ -29,12 +29,16 @@
     </branches>
     <localBranch></localBranch>
     <mergeOptions/>
+    <recursiveSubmodules>false</recursiveSubmodules>
     <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
     <authorOrCommitter>false</authorOrCommitter>
     <clean>false</clean>
     <wipeOutWorkspace>false</wipeOutWorkspace>
     <buildChooser class="hudson.plugins.git.util.DefaultBuildChooser"/>
     <gitTool>Default</gitTool>
+    <browser class="hudson.plugins.git.browser.GithubWeb">
+      <url>https://github.com/wrobel/php-hudson-tools/</url>
+    </browser>
     <submoduleCfg class="list"/>
     <relativeTargetDir></relativeTargetDir>
     <excludedRegions></excludedRegions>
@@ -47,18 +51,9 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Ant>
-      <targets>horde</targets>
+      <targets>clean pear phpunit components hordestandard</targets>
     </hudson.tasks.Ant>
   </builders>
-  <publishers>
-    <hudson.tasks.BuildTrigger>
-      <childProjects></childProjects>
-      <threshold>
-        <name>SUCCESS</name>
-        <ordinal>0</ordinal>
-        <color>BLUE</color>
-      </threshold>
-    </hudson.tasks.BuildTrigger>
-  </publishers>
+  <publishers/>
   <buildWrappers/>
 </project>

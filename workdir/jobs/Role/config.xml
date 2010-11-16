@@ -1,7 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <project>
   <actions/>
-  <description>%4$s</description>
+  <description>This package provides a method for PEAR to install Horde
+ components into a base Horde installation.</description>
   <logRotator>
     <daysToKeep>5</daysToKeep>
     <numToKeep>10</numToKeep>
@@ -19,7 +20,7 @@
   <builders>
     <hudson.tasks.Shell>
       <command>rm -rf ${WORKSPACE}/*.tgz
-php -d include_path=&quot;.:${WORKSPACE}/../../%3$s/php&quot; ${WORKSPACE}/../../%3$s/horde-components -t ../../../../templates --pearrc ${WORKSPACE}/../../%3$s/../.pearrc -D ${WORKSPACE}/@SPEC@ -N ${WORKSPACE}/../../horde-git/workspace/%1$s
+php -d include_path=&quot;.:${WORKSPACE}/../../php-hudson-tools/workspace/pear/pear/php&quot; ${WORKSPACE}/../../php-hudson-tools/workspace/pear/pear/horde-components -t ../../../../templates --pearrc ${WORKSPACE}/../../php-hudson-tools/workspace/pear/pear/../.pearrc -D ${WORKSPACE}/Role-H4.spec -N ${WORKSPACE}/../../horde-git/workspace/framework/Role
     </command>
     </hudson.tasks.Shell>
     <!--<hudson.tasks.Ant>

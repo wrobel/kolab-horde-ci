@@ -1,6 +1,6 @@
 include settings.mk
 
-HORDE_FRAMEWORK=workdir/jobs/horde/workspace/framework
+HORDE_FRAMEWORK=workdir/jobs/horde-git/workspace/framework
 TOOLSDIR=workdir/jobs/php-hudson-tools/workspace/pear/pear
 
 URL_WAR=http://updates.hudson-labs.org/download/war/1.384/hudson.war
@@ -34,31 +34,8 @@ PLUGINS_LATEST=analysis-collector.hpi \
 URL_WAR_LATEST=http://hudson-ci.org/latest/hudson.war
 
 
-JOBS=Autoloader \
-     Argv \
-     Constraint \
-     Controller \
-     Date \
-     Date_Parser \
-     Db \
-     Exception \
-     Http \
-     Itip \
-     Kolab_Config \
-     Kolab_Session \
-     Ldap \
-     Log \
-     LoginTasks \
-     Mail \
-     Mime \
-     Nonce \
-     Stream_Filter \
-     Support \
-     Text_Flowed \
-     Translation \
-     Url \
-     Xml_Element \
-     Yaml
+JOBS=Translation \
+     Role
 
 .PHONY:install
 install: hudson-war hudson-plugins
@@ -107,6 +84,7 @@ $(PLUGINS): workdir/plugins/.keep
 $(JOBS:%=job-%):
 	mkdir -p workdir/jobs/$(@:job-%=%)
 	php -d include_path=$(TOOLSDIR)/php $(TOOLSDIR)/horde-components -T php-hudson-tools/workspace/pear/pear -t $(SUBDIR)/templates -c workdir/jobs/$(@:job-%=%) --pearrc=$(TOOLSDIR)/../.pearrc $(HORDE_FRAMEWORK)/$(@:job-%=%)
+	sed -i -e 's/@SPEC@/$(@:job-%=%)-H4.spec/' workdir/jobs/$(@:job-%=%)/config.xml
 
 .PHONY:start
 start:
