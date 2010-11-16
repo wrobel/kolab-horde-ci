@@ -33,11 +33,22 @@ PLUGINS_LATEST=analysis-collector.hpi \
                xunit.hpi
 URL_WAR_LATEST=http://hudson-ci.org/latest/hudson.war
 
+DEPENDENCIES=PEAR-PEAR-H4 \
+             PEAR-Horde-Channel \
+             PEAR-Auth_SASL-H4 \
+             PEAR-Crypt_Blowfish-H4 \
+             PEAR-DB-H4 \
+             PEAR-Log-H4 \
+             PEAR-Mail-H4 \
+             PEAR-Net_SMTP-H4 \
+             PEAR-Net_Socket-H4 \
+             PEAR-PHPUnit-Channel-H4 \
+             PHPUnit-H4
 
 JOBS=Translation
 
 .PHONY:install
-install: hudson-war hudson-plugins
+install: hudson-war hudson-plugins kolab-dependencies
 
 .PHONY:install-latest
 install-latest: hudson-war-latest hudson-plugins-latest
@@ -47,6 +58,14 @@ hudson-war: war/hudson.war
 
 .PHONY:hudson-plugins
 hudson-plugins: workdir/plugins/.keep $(PLUGINS)
+
+.PHONY:kolab-dependencies
+kolab-dependencies: $(DEPENDENCIES:%=dependency-%)
+
+.PHONY: $(DEPENDENCIES:%=dependency-%)
+$(DEPENDENCIES:%=dependency-%):
+	/kolab/bin/openpkg rpm --rebuild dependencies/$(@:dependency-%=%)-*.src.rpm
+	-/kolab/bin/openpkg rpm -Uhv --force /kolab/RPM/PKG/$(@:dependency-%=%)-*.rpm
 
 .PHONY:hudson-jobs
 hudson-jobs: job-Role $(JOBS:%=job-%)
@@ -84,14 +103,16 @@ job-Role:
 	mkdir -p workdir/jobs/Role
 	php -d include_path=$(TOOLSDIR)/php $(TOOLSDIR)/horde-components -T php-hudson-tools/workspace/pear/pear -t $(SUBDIR)/templates -c workdir/jobs/Role --pearrc=$(TOOLSDIR)/../.pearrc $(HORDE_FRAMEWORK)/Role
 	sed -i -e 's/@NAME@/Horde_Role/g' workdir/jobs/Role/config.xml
-	touch package.patch
+	mkdir -p workdir/jobs/Role/workspace/
+	touch workdir/jobs/Role/workspace/package.patch
 
 .PHONY:$(JOBS:%=job-%)
 $(JOBS:%=job-%):
 	mkdir -p workdir/jobs/$(@:job-%=%)
 	php -d include_path=$(TOOLSDIR)/php $(TOOLSDIR)/horde-components -T php-hudson-tools/workspace/pear/pear -t $(SUBDIR)/templates -c workdir/jobs/$(@:job-%=%) --pearrc=$(TOOLSDIR)/../.pearrc $(HORDE_FRAMEWORK)/$(@:job-%=%)
 	sed -i -e 's/@NAME@/Horde_$(@:job-%=%)-H4/g' workdir/jobs/$(@:job-%=%)/config.xml
-	touch package.patch
+	mkdir -p workdir/jobs/$(@:job-%=%)/workspace/
+	touch workdir/jobs/$(@:job-%=%)/workspace/package.patch
 
 .PHONY:start
 start:

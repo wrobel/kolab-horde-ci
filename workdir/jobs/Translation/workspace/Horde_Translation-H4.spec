@@ -1,14 +1,14 @@
 # Variables
-%define         V_package Horde_<?php if ($package->getName() == 'Role') {echo $package->getName() . "\n";} else {echo $package->getName() . "-H4\n";} ?>
-%define         V_pear_package <?php echo $package->getName() . "\n"; ?>
-%define         V_package_url http://pear.horde.org/<?php echo $package->getName() . "\n"; ?>
-%define         V_version <?php echo $version . "\n"; ?>
+%define         V_package Horde_Translation-H4
+%define         V_pear_package Translation
+%define         V_package_url http://pear.horde.org/Translation
+%define         V_version 0.1.0dev201011161324
 %define         V_release 1
 %define         V_sourceurl http://files.kolab.org/incoming/wrobel/Horde4
-%define         V_php_lib_loc <?php if ($package->getName() == 'Role') {echo "php\n";} else {echo "php-h4\n";} ?>
+%define         V_php_lib_loc php-h4
 %define         V_www_loc NONE
-%define         V_summary <?php echo $package->getSummary() . "\n"; ?>
-%define         V_license <?php echo $package->getLicense() . "\n"; ?>
+%define         V_summary Horde translation library
+%define         V_license LGPL
 
 # Package Information
 Name:	   %{V_package}
@@ -38,49 +38,13 @@ BuildPreReq:  PEAR-Horde-Channel
 PreReq:       OpenPKG, openpkg >= 20070603
 PreReq:       php, php::with_pear = yes
 PreReq:       PEAR-Horde-Channel
-<?php
-$horde_deps = $package->getDependencyHelper()->listAllHordeDependencies();
-foreach ($horde_deps as $dep) {
-    if ($dep->isRequired()) {
-        echo 'PreReq: Horde_' . $dep->name() . '-H4';
-        echo "\n";
-    } else if (in_array($dep->name(), array('Test'))) {
-        echo 'PreReq: Horde_' . $dep->name() . '-H4';
-        echo "\n";
-    }
-}
-$ext_deps = $package->getDependencyHelper()->listAllExternalDependencies();
-foreach ($ext_deps as $dep) {
-    if ($dep->isRequired()) {
-        if ($dep->name() == 'PEAR') {
-            continue;
-        }
-        if ($dep->channel() == 'pecl.php.net') {
-            # No pecl for OpenPKG now.
-            continue;
-        }
-        echo 'PreReq: ';
-        switch ($dep->channel()) {
-        case 'pear.php.net':
-            echo 'PEAR-';
-            break;
-        case 'pecl.php.net':
-            echo 'pecl-';
-            break;
-        default:
-            break;
-        }
-        echo $dep->name();
-        echo "\n";
-    }
-}
-?>
+PreReq: Horde_Test-H4
 
 # Package options
 %option       with_chroot              no
 
 %description 
-<?php echo $package->getDescription() . "\n"; ?>
+.
 
 %prep
 	%setup -n %{V_pear_package}-%{V_version}
