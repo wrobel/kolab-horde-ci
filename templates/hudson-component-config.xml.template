@@ -19,7 +19,10 @@
   <builders>
     <hudson.tasks.Shell>
       <command>rm -rf ${WORKSPACE}/*.tgz
-php -d include_path=&quot;.:${WORKSPACE}/../../%3$s/php&quot; ${WORKSPACE}/../../%3$s/horde-components -t ../../../../templates --pearrc ${WORKSPACE}/../../%3$s/../.pearrc -D ${WORKSPACE}/@SPEC@ -N ${WORKSPACE}/../../horde-git/workspace/%1$s
+php -d include_path=&quot;.:${WORKSPACE}/../../%3$s/php&quot; ${WORKSPACE}/../../%3$s/horde-components -t ../../../../templates --pearrc ${WORKSPACE}/../../%3$s/../.pearrc -D ${WORKSPACE}/@NAME@.spec -N ${WORKSPACE}/../../horde-git/workspace/%1$s
+mkdir -p /kolab/RPM/SRC/@NAME@
+rsync -avz --delete-after ${WORKSPACE}/ /kolab/RPM/SRC/@NAME@/
+cd /kolab/RPM/SRC/@NAME@ &quot;&quot; /kolab/bin/openpkg rpm -ba @NAME@.spec
     </command>
     </hudson.tasks.Shell>
     <!--<hudson.tasks.Ant>
