@@ -41,7 +41,7 @@ PreReq:       PEAR-Horde-Channel
 <?php
 $horde_deps = $package->getDependencyHelper()->listAllHordeDependencies();
 foreach ($horde_deps as $dep) {
-    if ($dep->isRequired()) {
+    if ($dep->isRequired() && !in_array($dep->name(), array('Core', 'DataTree'))) {
         echo 'PreReq: Horde_' . $dep->name() . '-H4';
         echo "\n";
     } else if (in_array($dep->name(), array('Test'))) {
@@ -71,7 +71,7 @@ foreach ($ext_deps as $dep) {
             break;
         }
         echo $dep->name();
-        echo "\n";
+        echo "-H4\n";
     }
 }
 ?>

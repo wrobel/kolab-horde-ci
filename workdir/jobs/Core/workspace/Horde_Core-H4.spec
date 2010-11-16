@@ -2,7 +2,7 @@
 %define         V_package Horde_Core-H4
 %define         V_pear_package Core
 %define         V_package_url http://pear.horde.org/Core
-%define         V_version 0.1.0dev201011161630
+%define         V_version 0.1.0dev201011161709
 %define         V_release 1
 %define         V_sourceurl http://files.kolab.org/incoming/wrobel/Horde4
 %define         V_php_lib_loc php-h4
@@ -88,7 +88,7 @@ Application Framework.
         fi
         env PHP_PEAR_PHP_BIN="%{l_prefix}/bin/php -d safe_mode=off -d memory_limit=40M"\
             PHP_PEAR_CACHE_DIR="/tmp/pear/cache"                                       \
-	    %{l_prefix}/bin/pear -d www_dir="%{l_prefix}/var/kolab/www/%{V_www_loc}"   \
+	    %{l_prefix}/bin/pear -d horde_dir="%{l_prefix}/var/kolab/www/client4"      \
 	                         -d bin_dir="%{l_prefix}/$PHP_BIN_DIR"                 \
 	                         -d php_dir="%{l_prefix}/lib/%{V_php_lib_loc}"         \
 	                         -d doc_dir="%{l_prefix}/lib/%{V_php_lib_loc}/doc"     \

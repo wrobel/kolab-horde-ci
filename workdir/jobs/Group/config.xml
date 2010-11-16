@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<project>
+  <actions/>
+  <description>Package for managing and accessing the Horde groups system.</description>
+  <logRotator>
+    <daysToKeep>5</daysToKeep>
+    <numToKeep>10</numToKeep>
+    <artifactDaysToKeep>-1</artifactDaysToKeep>
+    <artifactNumToKeep>-1</artifactNumToKeep>
+  </logRotator>
+  <keepDependencies>false</keepDependencies>
+  <properties/>
+  <scm class="hudson.scm.NullSCM"/>
+  <canRoam>true</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers class="vector"/>
+  <concurrentBuild>false</concurrentBuild>
+  <builders>
+    <hudson.tasks.Shell>
+      <command>rm -rf ${WORKSPACE}/*.tgz
+php -d include_path=&quot;.:${WORKSPACE}/../../php-hudson-tools/workspace/pear/pear/php&quot; ${WORKSPACE}/../../php-hudson-tools/workspace/pear/pear/horde-components -t ../../../../templates --pearrc ${WORKSPACE}/../../php-hudson-tools/workspace/pear/pear/../.pearrc -D ${WORKSPACE}/Horde_Group-H4.spec -N ${WORKSPACE}/../../horde-git/workspace/framework/Group
+mkdir -p /kolab/RPM/SRC/Horde_Group-H4
+rsync -avz --delete-after ${WORKSPACE}/ /kolab/RPM/SRC/Horde_Group-H4/
+/kolab/bin/openpkg rpm -ba Horde_Group-H4.spec
+/kolab/bin/openpkg rpm -ihv --force /kolab/RPM/PKG/Horde_Group-H4-*.`/kolab/bin/openpkg rpm -q --qf=&quot;%{ARCH}-%{OS}&quot; openpkg`-kolab.rpm
+rm -rf /kolab/RPM/PGK/Horde_Group-H4-*
+    </command>
+    </hudson.tasks.Shell>
+  </builders>
+  <publishers>
+    <hudson.tasks.Mailer>
+      <recipients>wrobel@pardus.de</recipients>
+      <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
+      <sendToIndividuals>false</sendToIndividuals>
+    </hudson.tasks.Mailer>
+  </publishers>
+  <buildWrappers/>
+</project>

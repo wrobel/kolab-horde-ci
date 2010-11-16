@@ -45,8 +45,10 @@ DEPENDENCIES=PEAR-PEAR-H4 \
              PEAR-PHPUnit-Channel-H4 \
              PHPUnit-H4
 
-JOBS=Auth \
+JOBS=Alarm \
+     Auth \
      Autoloader \
+     Block \
      Browser \
      Cache \
      Cli \
@@ -54,6 +56,7 @@ JOBS=Auth \
      Core \
      Date \
      Exception \
+     Group \
      Injector \
      Log \
      LoginTasks \
@@ -61,7 +64,9 @@ JOBS=Auth \
      Mime \
      Nls \
      Notification \
+     Perms \
      Prefs \
+     Secret \
      Serialize \
      SessionHandler \
      Stream_Filter \
