@@ -20,7 +20,7 @@
   <builders>
     <hudson.tasks.Shell>
       <command>rm -rf ${WORKSPACE}/*.tgz
-php -d include_path=&quot;.:${WORKSPACE}/../../php-hudson-tools/workspace/pear/pear/php&quot; ${WORKSPACE}/../../php-hudson-tools/workspace/pear/pear/horde-components -t ../../../../templates --pearrc ${WORKSPACE}/../../php-hudson-tools/workspace/pear/pear/../.pearrc -D ${WORKSPACE}/Role-H4.spec -N ${WORKSPACE}/../../horde-git/workspace/framework/Role
+php -d include_path=&quot;.:${WORKSPACE}/../../php-hudson-tools/workspace/pear/pear/php&quot; ${WORKSPACE}/../../php-hudson-tools/workspace/pear/pear/horde-components -t ../../../../templates --pearrc ${WORKSPACE}/../../php-hudson-tools/workspace/pear/pear/../.pearrc -D ${WORKSPACE}/Horde_Role.spec -N ${WORKSPACE}/../../horde-git/workspace/framework/Role
     </command>
     </hudson.tasks.Shell>
     <!--<hudson.tasks.Ant>

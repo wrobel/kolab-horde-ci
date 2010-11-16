@@ -34,8 +34,7 @@ PLUGINS_LATEST=analysis-collector.hpi \
 URL_WAR_LATEST=http://hudson-ci.org/latest/hudson.war
 
 
-JOBS=Translation \
-     Role
+JOBS=Translation
 
 .PHONY:install
 install: hudson-war hudson-plugins
@@ -50,7 +49,7 @@ hudson-war: war/hudson.war
 hudson-plugins: workdir/plugins/.keep $(PLUGINS)
 
 .PHONY:hudson-jobs
-hudson-jobs: $(JOBS:%=job-%)
+hudson-jobs: job-Role $(JOBS:%=job-%)
 
 war/.keep:
 	mkdir -p war
@@ -80,11 +79,17 @@ $(PLUGINS): workdir/plugins/.keep
 	  VERSION=$(shell echo $(@) | sed -e 's/.*\.hpi\.//'); \
 	  cd workdir/plugins && wget http://hudson-ci.org/download/plugins/$$NAME/$$VERSION/$$NAME.hpi
 
+.PHONY:job-Role
+job-Role:
+	mkdir -p workdir/jobs/Role
+	php -d include_path=$(TOOLSDIR)/php $(TOOLSDIR)/horde-components -T php-hudson-tools/workspace/pear/pear -t $(SUBDIR)/templates -c workdir/jobs/Role --pearrc=$(TOOLSDIR)/../.pearrc $(HORDE_FRAMEWORK)/Role
+	sed -i -e 's/@SPEC@/Horde_Role.spec/' workdir/jobs/Role/config.xml
+
 .PHONY:$(JOBS:%=job-%)
 $(JOBS:%=job-%):
 	mkdir -p workdir/jobs/$(@:job-%=%)
 	php -d include_path=$(TOOLSDIR)/php $(TOOLSDIR)/horde-components -T php-hudson-tools/workspace/pear/pear -t $(SUBDIR)/templates -c workdir/jobs/$(@:job-%=%) --pearrc=$(TOOLSDIR)/../.pearrc $(HORDE_FRAMEWORK)/$(@:job-%=%)
-	sed -i -e 's/@SPEC@/$(@:job-%=%)-H4.spec/' workdir/jobs/$(@:job-%=%)/config.xml
+	sed -i -e 's/@SPEC@/Horde_$(@:job-%=%)-H4.spec/' workdir/jobs/$(@:job-%=%)/config.xml
 
 .PHONY:start
 start:
@@ -115,4 +120,3 @@ $(JOBS:%=clean-job-%):
 	rm -rf workdir/jobs/$(@:clean-job-%=%)/lastStable
 	rm -rf workdir/jobs/$(@:clean-job-%=%)/lastSuccessful
 	rm -rf workdir/jobs/$(@:clean-job-%=%)/nextBuildNumber
-	rm -rf workdir/jobs/$(@:clean-job-%=%)/workspace

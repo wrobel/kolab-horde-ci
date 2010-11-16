@@ -1,11 +1,11 @@
 # Variables
-%define         V_package Horde_Role-H4
+%define         V_package Horde_Role
 %define         V_pear_package Role
 %define         V_package_url http://pear.horde.org/Role
-%define         V_version 0.2.0dev201011160618
+%define         V_version 0.2.0dev201011160718
 %define         V_release 1
 %define         V_sourceurl http://files.kolab.org/incoming/wrobel/Horde4
-%define         V_php_lib_loc php-h4
+%define         V_php_lib_loc php
 %define         V_www_loc NONE
 %define         V_summary PEAR Installer role used to install Horde components
 %define         V_license LGPL

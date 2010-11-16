@@ -1,11 +1,11 @@
 # Variables
-%define         V_package Horde_<?php echo $package->getName() . "-H4\n"; ?>
+%define         V_package Horde_<?php if ($package->getName() == 'Role') {echo $package->getName() . "\n";} else {echo $package->getName() . "-H4\n";} ?>
 %define         V_pear_package <?php echo $package->getName() . "\n"; ?>
 %define         V_package_url http://pear.horde.org/<?php echo $package->getName() . "\n"; ?>
 %define         V_version <?php echo $version . "\n"; ?>
 %define         V_release 1
 %define         V_sourceurl http://files.kolab.org/incoming/wrobel/Horde4
-%define         V_php_lib_loc php-h4
+%define         V_php_lib_loc <?php if ($package->getName() == 'Role') {echo "php\n";} else {echo "php-h4\n";} ?>
 %define         V_www_loc NONE
 %define         V_summary <?php echo $package->getSummary() . "\n"; ?>
 %define         V_license <?php echo $package->getLicense() . "\n"; ?>
