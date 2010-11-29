@@ -1,12 +1,13 @@
 # Variables
 %define         V_package Horde_Cli-H4
+
 %define         V_pear_package Cli
 %define         V_package_url http://pear.horde.org/Cli
-%define         V_version 0.2.0dev201011161656
+%define         V_version 0.2.0dev201011290339
 %define         V_release 1
 %define         V_sourceurl http://files.kolab.org/incoming/wrobel/Horde4
 %define         V_php_lib_loc php-h4
-%define         V_www_loc NONE
+%define         V_www_loc var/kolab/www/client4
 %define         V_summary Horde Command Line Interface API
 %define         V_license LGPL
 
@@ -56,6 +57,7 @@ Horde_Cli:: API for basic command-line functionality/checks
 	    %patch -p1 -P 0
 	fi
 
+
 %build
 
 %install
@@ -69,7 +71,7 @@ Horde_Cli:: API for basic command-line functionality/checks
         fi
         env PHP_PEAR_PHP_BIN="%{l_prefix}/bin/php -d safe_mode=off -d memory_limit=40M"\
             PHP_PEAR_CACHE_DIR="/tmp/pear/cache"                                       \
-	    %{l_prefix}/bin/pear -d horde_dir="%{l_prefix}/var/kolab/www/client4"      \
+	    %{l_prefix}/bin/pear -d horde_dir="%{l_prefix}/%{V_www_loc}"               \
 	                         -d bin_dir="%{l_prefix}/$PHP_BIN_DIR"                 \
 	                         -d php_dir="%{l_prefix}/lib/%{V_php_lib_loc}"         \
 	                         -d doc_dir="%{l_prefix}/lib/%{V_php_lib_loc}/doc"     \
@@ -86,7 +88,8 @@ Horde_Cli:: API for basic command-line functionality/checks
                 cp -a $RPM_BUILD_ROOT/%{l_prefix}/lib/%{V_php_lib_loc} $RPM_BUILD_ROOT%{l_prefix}/var/kolab/www/%{l_prefix}/lib/
         %endif
 
-        %{l_rpmtool} files -v -ofiles -r$RPM_BUILD_ROOT %{l_files_std} 
+
+        %{l_rpmtool} files -v -ofiles -r$RPM_BUILD_ROOT %{l_files_std} \
 
 %clean
 	rm -rf $RPM_BUILD_ROOT

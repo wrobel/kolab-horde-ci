@@ -72,11 +72,13 @@ JOBS=Alarm \
      Stream_Filter \
      Stream_Wrapper \
      Support \
+     Template \
      Test \
      Token \
      Translation \
      Url \
-     Util
+     Util \
+     View
 
 APP_JOBS=horde
 
@@ -153,7 +155,7 @@ $(JOBS:%=job-%):
 $(APP_JOBS:%=job-%):
 	mkdir -p workdir/jobs/$(@:job-%=%)
 	php -d include_path=$(TOOLSDIR)/php $(TOOLSDIR)/horde-components -T php-hudson-tools/workspace/pear/pear -t $(SUBDIR)/templates -c workdir/jobs/$(@:job-%=%) --pearrc=$(TOOLSDIR)/../.pearrc $(HORDE_FRAMEWORK)/../$(@:job-%=%)
-	sed -i -e 's/@NAME@/Horde_$(@:job-%=%)-H4/g' workdir/jobs/$(@:job-%=%)/config.xml
+	sed -i -e 's/@NAME@/$(@:job-%=%)-H4/g' workdir/jobs/$(@:job-%=%)/config.xml
 	mkdir -p workdir/jobs/$(@:job-%=%)/workspace/
 	touch workdir/jobs/$(@:job-%=%)/workspace/package.patch
 	echo "*.tgz" > workdir/jobs/$(@:job-%=%)/workspace/.gitignore

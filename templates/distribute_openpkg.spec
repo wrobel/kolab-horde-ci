@@ -1,12 +1,17 @@
 # Variables
+<?php if (in_array($package->getName(), array('horde'))): ?>
+%define         V_package <?php if ($package->getName() == 'Role') {echo $package->getName() . "\n";} else {echo $package->getName() . "-H4\n";} ?>
+<?php else: ?>
 %define         V_package Horde_<?php if ($package->getName() == 'Role') {echo $package->getName() . "\n";} else {echo $package->getName() . "-H4\n";} ?>
+<?php endif; ?>
+
 %define         V_pear_package <?php echo $package->getName() . "\n"; ?>
 %define         V_package_url http://pear.horde.org/<?php echo $package->getName() . "\n"; ?>
 %define         V_version <?php echo $version . "\n"; ?>
 %define         V_release 1
 %define         V_sourceurl http://files.kolab.org/incoming/wrobel/Horde4
 %define         V_php_lib_loc <?php if ($package->getName() == 'Role') {echo "php\n";} else {echo "php-h4\n";} ?>
-%define         V_www_loc NONE
+%define         V_www_loc var/kolab/www/client4
 %define         V_summary <?php echo $package->getSummary() . "\n"; ?>
 %define         V_license <?php echo $package->getLicense() . "\n"; ?>
 
@@ -23,6 +28,21 @@ Distribution:	OpenPKG
 
 # List of Sources
 Source:    %{V_sourceurl}/%{V_pear_package}-%{V_version}.tgz
+<?php if ($package->getName() == 'horde'): ?>
+Source1:        webclient4-config_conf.php.template
+Source2:        webclient4-config_hooks.php.template
+Source3:        webclient4-config_mime_drivers.php.template
+Source4:        webclient4-config_motd.php.template
+Source5:        webclient4-config_nls.php.template
+Source6:        webclient4-config_prefs.php.template
+Source7:        webclient4-config_registry.php.template
+Source8:        10-kolab_hooks_base.php
+Source9:        10-kolab_prefs_base.php
+Source10:       10-kolab_conf_base.php
+Source11:       conf.php
+Source12:       horde.local.php
+Source13:       hook-delete_webmail4_user.php
+<?php endif; ?>
 
 # List of patches
 Patch0:    package.patch
@@ -91,6 +111,10 @@ foreach ($ext_deps as $dep) {
 	    %patch -p1 -P 0
 	fi
 
+<?php if ($package->getName() == 'horde'): ?>
+        sed -i -e 's#/usr/bin/env php#%{l_prefix}/bin/php#' bin/*
+<?php endif; ?>
+
 %build
 
 %install
@@ -104,7 +128,7 @@ foreach ($ext_deps as $dep) {
         fi
         env PHP_PEAR_PHP_BIN="%{l_prefix}/bin/php -d safe_mode=off -d memory_limit=40M"\
             PHP_PEAR_CACHE_DIR="/tmp/pear/cache"                                       \
-	    %{l_prefix}/bin/pear -d horde_dir="%{l_prefix}/var/kolab/www/client4"      \
+	    %{l_prefix}/bin/pear -d horde_dir="%{l_prefix}/%{V_www_loc}"               \
 	                         -d bin_dir="%{l_prefix}/$PHP_BIN_DIR"                 \
 	                         -d php_dir="%{l_prefix}/lib/%{V_php_lib_loc}"         \
 	                         -d doc_dir="%{l_prefix}/lib/%{V_php_lib_loc}/doc"     \
@@ -121,7 +145,62 @@ foreach ($ext_deps as $dep) {
                 cp -a $RPM_BUILD_ROOT/%{l_prefix}/lib/%{V_php_lib_loc} $RPM_BUILD_ROOT%{l_prefix}/var/kolab/www/%{l_prefix}/lib/
         %endif
 
-        %{l_rpmtool} files -v -ofiles -r$RPM_BUILD_ROOT %{l_files_std} 
+<?php if ($package->getName() == 'horde'): ?>
+	%{l_shtool} install -d $RPM_BUILD_ROOT%{l_prefix}/var/kolab/webclient4_data/storage
+	%{l_shtool} install -d $RPM_BUILD_ROOT%{l_prefix}/var/kolab/webclient4_data/log
+	%{l_shtool} install -d $RPM_BUILD_ROOT%{l_prefix}/var/kolab/webclient4_data/tmp
+	%{l_shtool} install -d $RPM_BUILD_ROOT%{l_prefix}/var/kolab/webclient4_data/sessions
+	%{l_shtool} install -d $RPM_BUILD_ROOT%{l_prefix}/etc/kolab/templates	
+	%{l_shtool} install -d $RPM_BUILD_ROOT%{l_prefix}/var/kolab/hooks/delete
+	%{l_shtool} install -d $RPM_BUILD_ROOT%{l_prefix}/%{V_www_loc}/config/conf.d
+	%{l_shtool} install -d $RPM_BUILD_ROOT%{l_prefix}/%{V_www_loc}/config/hooks.d
+	%{l_shtool} install -d $RPM_BUILD_ROOT%{l_prefix}/%{V_www_loc}/config/mime.d
+	%{l_shtool} install -d $RPM_BUILD_ROOT%{l_prefix}/%{V_www_loc}/config/motd.d
+	%{l_shtool} install -d $RPM_BUILD_ROOT%{l_prefix}/%{V_www_loc}/config/nls.d
+	%{l_shtool} install -d $RPM_BUILD_ROOT%{l_prefix}/%{V_www_loc}/config/prefs.d
+	%{l_shtool} install -d $RPM_BUILD_ROOT%{l_prefix}/%{V_www_loc}/config/registry.d
+
+	%{l_shtool} install -c -m 644 %{l_value -s -a} %{S:1} %{S:2} %{S:3} %{S:4} %{S:5} %{S:6} %{S:7} \
+	  $RPM_BUILD_ROOT%{l_prefix}/etc/kolab/templates
+	sed -i -e 's#@@@horde_confdir@@@#%{l_prefix}/%{V_www_loc}/config#' $RPM_BUILD_ROOT%{l_prefix}/etc/kolab/templates/*.php.template
+
+	%{l_shtool} install -c -m 644 %{l_value -s -a} %{S:8} $RPM_BUILD_ROOT%{l_prefix}/%{V_www_loc}/config/hooks.d/
+	%{l_shtool} install -c -m 644 %{l_value -s -a} %{S:9} $RPM_BUILD_ROOT%{l_prefix}/%{V_www_loc}/config/prefs.d/
+	%{l_shtool} install -c -m 644 %{l_value -s -a} %{S:10} $RPM_BUILD_ROOT%{l_prefix}/%{V_www_loc}/config/conf.d/
+	%{l_shtool} install -c -m 644 %{l_value -s -a} %{S:11} $RPM_BUILD_ROOT%{l_prefix}/%{V_www_loc}/config/
+	%{l_shtool} install -c -m 644 %{l_value -s -a} %{S:12} $RPM_BUILD_ROOT%{l_prefix}/%{V_www_loc}/config/
+	sed -i -e 's#@@@prefix@@@#%{l_prefix}#' $RPM_BUILD_ROOT%{l_prefix}/%{V_www_loc}/config/horde.local.php
+	sed -i -e 's#@@@lib_loc@@@#%{V_php_lib_loc}#' $RPM_BUILD_ROOT%{l_prefix}/%{V_www_loc}/config/horde.local.php
+
+	%{l_shtool} install -c -m 755 %{l_value -s -a} %{S:13} $RPM_BUILD_ROOT%{l_prefix}/var/kolab/hooks/delete
+	sed -i -e 's#@@@prefix@@@#%{l_prefix}#' $RPM_BUILD_ROOT%{l_prefix}/var/kolab/hooks/delete/hook-*
+	sed -i -e 's#@@@php_bin@@@#%{l_prefix}/bin/php#' $RPM_BUILD_ROOT%{l_prefix}/var/kolab/hooks/delete/hook-*
+
+
+        sqlite $RPM_BUILD_ROOT%{l_prefix}/var/kolab/webclient4_data/storage/horde.db < scripts/sql/horde_alarms.sql
+        sqlite $RPM_BUILD_ROOT%{l_prefix}/var/kolab/webclient4_data/storage/horde.db < scripts/sql/horde_perms.sql
+        sqlite $RPM_BUILD_ROOT%{l_prefix}/var/kolab/webclient4_data/storage/horde.db < scripts/sql/horde_syncml.sql
+
+	for fl in $RPM_BUILD_ROOT%{l_prefix}/%{V_www_loc}/config/*.dist;do cp $fl ${fl/.dist/}; done
+<?php endif; ?>
+
+        %{l_rpmtool} files -v -ofiles -r$RPM_BUILD_ROOT %{l_files_std} \
+<?php if ($package->getName() == 'horde'): ?>
+	    '%config %{l_prefix}/etc/kolab/templates/webclient4-config_conf.php.template' \
+            '%config %{l_prefix}/etc/kolab/templates/webclient4-config_hooks.php.template' \
+            '%config %{l_prefix}/etc/kolab/templates/webclient4-config_mime_drivers.php.template' \
+            '%config %{l_prefix}/etc/kolab/templates/webclient4-config_motd.php.template' \
+            '%config %{l_prefix}/etc/kolab/templates/webclient4-config_nls.php.template' \
+            '%config %{l_prefix}/etc/kolab/templates/webclient4-config_prefs.php.template' \
+            '%config %{l_prefix}/etc/kolab/templates/webclient4-config_registry.php.template' \
+            '%config(noreplace) %{l_prefix}/var/kolab/webclient4_data/storage/horde.db' \
+            %dir '%defattr(-,%{l_nusr},%{l_ngrp})' %{l_prefix}/var/kolab/webclient4_data/log \
+            %dir '%defattr(-,%{l_nusr},%{l_ngrp})' %{l_prefix}/var/kolab/webclient4_data/storage \
+            %dir '%defattr(-,%{l_nusr},%{l_ngrp})' %{l_prefix}/var/kolab/webclient4_data/storage/horde.db \
+            %dir '%defattr(-,%{l_nusr},%{l_ngrp})' %{l_prefix}/var/kolab/webclient4_data/tmp \
+            %dir '%defattr(-,%{l_nusr},%{l_ngrp})' %{l_prefix}/var/kolab/webclient4_data/sessions \
+	    '%defattr(-,%{l_nusr},%{l_ngrp})' %{l_prefix}/var/kolab/www/client4/config/conf.php
+<?php endif; ?>
 
 %clean
 	rm -rf $RPM_BUILD_ROOT

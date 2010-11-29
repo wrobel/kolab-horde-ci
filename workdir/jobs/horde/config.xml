@@ -22,14 +22,17 @@ applications.</description>
   <builders>
     <hudson.tasks.Shell>
       <command>rm -rf ${WORKSPACE}/*.tgz
-php -d include_path=&quot;.:${WORKSPACE}/../../php-hudson-tools/workspace/pear/pear/php&quot; ${WORKSPACE}/../../php-hudson-tools/workspace/pear/pear/horde-components -t ../../../../templates --pearrc ${WORKSPACE}/../../php-hudson-tools/workspace/pear/pear/../.pearrc -D ${WORKSPACE}/Horde_horde-H4.spec -N ${WORKSPACE}/../../horde-git/workspace/horde
-mkdir -p /kolab/RPM/SRC/Horde_horde-H4
-rsync -avz --delete-after ${WORKSPACE}/ /kolab/RPM/SRC/Horde_horde-H4/
-/kolab/bin/openpkg rpm -ba Horde_horde-H4.spec
-/kolab/bin/openpkg rpm -ihv --force /kolab/RPM/PKG/Horde_horde-H4-*.`/kolab/bin/openpkg rpm -q --qf=&quot;%{ARCH}-%{OS}&quot; openpkg`-kolab.rpm
-rm -rf /kolab/RPM/PGK/Horde_horde-H4-*
+php -d include_path=&quot;.:${WORKSPACE}/../../php-hudson-tools/workspace/pear/pear/php&quot; ${WORKSPACE}/../../php-hudson-tools/workspace/pear/pear/horde-components -t ../../../../templates --pearrc ${WORKSPACE}/../../php-hudson-tools/workspace/pear/pear/../.pearrc -D ${WORKSPACE}/horde-H4.spec -N ${WORKSPACE}/../../horde-git/workspace/horde
+mkdir -p /kolab/RPM/SRC/horde-H4
+rsync -avz --delete-after ${WORKSPACE}/ /kolab/RPM/SRC/horde-H4/
+/kolab/bin/openpkg rpm -ba horde-H4.spec
+/kolab/bin/openpkg rpm -ihv --force /kolab/RPM/PKG/horde-H4-*.`/kolab/bin/openpkg rpm -q --qf=&quot;&#37;{ARCH}-&#37;{OS}&quot; openpkg`-kolab.rpm
+rm -rf /kolab/RPM/PGK/horde-H4-*
     </command>
     </hudson.tasks.Shell>
+    <!--<hudson.tasks.Ant>
+      <targets></targets>
+    </hudson.tasks.Ant>-->
   </builders>
   <publishers>
     <hudson.tasks.Mailer>
