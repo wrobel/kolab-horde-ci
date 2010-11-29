@@ -59,6 +59,9 @@ JOBS=Alarm \
      Exception \
      Group \
      Injector \
+     Kolab_Server \
+     Kolab_Session \
+     Ldap \
      Log \
      LoginTasks \
      Mail \
@@ -76,6 +79,7 @@ JOBS=Alarm \
      Template \
      Test \
      Token \
+     Tree \
      Translation \
      Url \
      Util \

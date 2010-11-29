@@ -53,7 +53,7 @@
   <builders/>
   <publishers>
     <hudson.tasks.BuildTrigger>
-      <childProjects>Role, Test, Translation, Exception, Url, Util, Nls, Date, Auth, Autoloader, Browser, Cache, Stream_Wrapper, Support, Cli, Injector, Constraint, Log, LoginTasks, Mail, Stream_Filter, Mime, Notification, Serialize, Prefs, SessionHandler, Token, Alarm, Block, Group, Perms, Secret, Db, Core, View, Template, horde</childProjects>
+      <childProjects>Role, Test, Translation, Exception, Url, Util, Nls, Date, Auth, Autoloader, Browser, Cache, Stream_Wrapper, Support, Cli, Injector, Constraint, Log, LoginTasks, Mail, Stream_Filter, Mime, Notification, Serialize, Prefs, SessionHandler, Token, Alarm, Block, Group, Perms, Secret, Db, Ldap, Kolab_Server, Kolab_Session, Tree, Core, View, Template, horde</childProjects>
       <threshold>
         <name>SUCCESS</name>
         <ordinal>0</ordinal>
