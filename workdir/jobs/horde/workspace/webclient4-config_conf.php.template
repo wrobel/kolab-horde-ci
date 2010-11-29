@@ -8,8 +8,6 @@ KOLAB_META_END
 @@@warning@@@
 */
 
-$conf['cookie']['domain'] = '@@@fqdnhostname@@@';
-$conf['cookie']['path'] = '@@@horde_cookie_path@@@';
 $conf['problems']['email'] = 'postmaster@@@@postfix-mydomain@@@';
 $conf['problems']['maildomain'] = '@@@postfix-mydomain@@@';
 $conf['kolab']['ldap']['server'] = '@@@ldap_uri@@@';

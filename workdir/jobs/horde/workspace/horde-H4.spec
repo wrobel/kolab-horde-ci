@@ -3,7 +3,7 @@
 
 %define         V_pear_package horde
 %define         V_package_url http://pear.horde.org/horde
-%define         V_version 4.0.0dev201011290343
+%define         V_version 4.0.0dev201011292030
 %define         V_release 1
 %define         V_sourceurl http://files.kolab.org/incoming/wrobel/Horde4
 %define         V_php_lib_loc php-h4
@@ -34,9 +34,8 @@ Source7:        webclient4-config_registry.php.template
 Source8:        10-kolab_hooks_base.php
 Source9:        10-kolab_prefs_base.php
 Source10:       10-kolab_conf_base.php
-Source11:       conf.php
-Source12:       horde.local.php
-Source13:       hook-delete_webmail4_user.php
+Source11:       horde.local.php
+Source12:       hook-delete_webmail4_user.php
 
 # List of patches
 Patch0:    package.patch
@@ -54,6 +53,7 @@ PreReq:       php, php::with_pear = yes
 PreReq:       PEAR-Horde-Channel
 PreReq: Horde_Template-H4
 PreReq: Horde_Token-H4
+PreReq: Horde_Tree-H4
 PreReq: Horde_View-H4
 
 # Package options
@@ -128,18 +128,19 @@ applications.
 	%{l_shtool} install -c -m 644 %{l_value -s -a} %{S:9} $RPM_BUILD_ROOT%{l_prefix}/%{V_www_loc}/config/prefs.d/
 	%{l_shtool} install -c -m 644 %{l_value -s -a} %{S:10} $RPM_BUILD_ROOT%{l_prefix}/%{V_www_loc}/config/conf.d/
 	%{l_shtool} install -c -m 644 %{l_value -s -a} %{S:11} $RPM_BUILD_ROOT%{l_prefix}/%{V_www_loc}/config/
-	%{l_shtool} install -c -m 644 %{l_value -s -a} %{S:12} $RPM_BUILD_ROOT%{l_prefix}/%{V_www_loc}/config/
 	sed -i -e 's#@@@prefix@@@#%{l_prefix}#' $RPM_BUILD_ROOT%{l_prefix}/%{V_www_loc}/config/horde.local.php
 	sed -i -e 's#@@@lib_loc@@@#%{V_php_lib_loc}#' $RPM_BUILD_ROOT%{l_prefix}/%{V_www_loc}/config/horde.local.php
 
-	%{l_shtool} install -c -m 755 %{l_value -s -a} %{S:13} $RPM_BUILD_ROOT%{l_prefix}/var/kolab/hooks/delete
+	%{l_shtool} install -c -m 755 %{l_value -s -a} %{S:12} $RPM_BUILD_ROOT%{l_prefix}/var/kolab/hooks/delete
 	sed -i -e 's#@@@prefix@@@#%{l_prefix}#' $RPM_BUILD_ROOT%{l_prefix}/var/kolab/hooks/delete/hook-*
 	sed -i -e 's#@@@php_bin@@@#%{l_prefix}/bin/php#' $RPM_BUILD_ROOT%{l_prefix}/var/kolab/hooks/delete/hook-*
 
 
-        sqlite $RPM_BUILD_ROOT%{l_prefix}/var/kolab/webclient4_data/storage/horde.db < scripts/sql/horde_alarms.sql
-        sqlite $RPM_BUILD_ROOT%{l_prefix}/var/kolab/webclient4_data/storage/horde.db < scripts/sql/horde_perms.sql
-        sqlite $RPM_BUILD_ROOT%{l_prefix}/var/kolab/webclient4_data/storage/horde.db < scripts/sql/horde_syncml.sql
+        %{l_prefix}/bin/sqlite3 $RPM_BUILD_ROOT%{l_prefix}/var/kolab/webclient4_data/storage/horde.db < scripts/sql/horde_alarms.sql
+        %{l_prefix}/bin/sqlite3 $RPM_BUILD_ROOT%{l_prefix}/var/kolab/webclient4_data/storage/horde.db < scripts/sql/horde_datatree.sql
+        sed -i -e 's/AUTO_INCREMENT//' scripts/sql/horde_perms.sql
+        %{l_prefix}/bin/sqlite3 $RPM_BUILD_ROOT%{l_prefix}/var/kolab/webclient4_data/storage/horde.db < scripts/sql/horde_perms.sql
+        %{l_prefix}/bin/sqlite3 $RPM_BUILD_ROOT%{l_prefix}/var/kolab/webclient4_data/storage/horde.db < scripts/sql/horde_syncml.sql
 
 	for fl in $RPM_BUILD_ROOT%{l_prefix}/%{V_www_loc}/config/*.dist;do cp $fl ${fl/.dist/}; done
 
