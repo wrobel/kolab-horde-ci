@@ -3,7 +3,7 @@
 
 %define         V_pear_package Template
 %define         V_package_url http://pear.horde.org/Template
-%define         V_version 0.1.0dev201011262055
+%define         V_version 0.1.0dev201011291806
 %define         V_release 1
 %define         V_sourceurl http://files.kolab.org/incoming/wrobel/Horde4
 %define         V_php_lib_loc php-h4
@@ -54,6 +54,7 @@ Horde Template system. Adapted from bTemplate, by Brian Lozier <brian@massassi.n
         if [ -n "`cat %{PATCH0}`" ]; then
 	    %patch -p1 -P 0
 	fi
+
 
 %build
 
