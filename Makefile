@@ -55,6 +55,7 @@ JOBS=Alarm \
      Constraint \
      Core \
      Date \
+     Db \
      Exception \
      Group \
      Injector \
