@@ -39,9 +39,8 @@ Source7:        webclient4-config_registry.php.template
 Source8:        10-kolab_hooks_base.php
 Source9:        10-kolab_prefs_base.php
 Source10:       10-kolab_conf_base.php
-Source11:       conf.php
-Source12:       horde.local.php
-Source13:       hook-delete_webmail4_user.php
+Source11:       horde.local.php
+Source12:       hook-delete_webmail4_user.php
 <?php endif; ?>
 
 # List of patches
@@ -61,7 +60,7 @@ PreReq:       PEAR-Horde-Channel
 <?php
 $horde_deps = $package->getDependencyHelper()->listAllHordeDependencies();
 foreach ($horde_deps as $dep) {
-    if ($dep->isRequired() && !in_array($dep->name(), array('Core', 'DataTree'))) {
+    if ($dep->isRequired() && !in_array($dep->name(), array('Core', 'DataTree', 'Kolab_Storage'))) {
         echo 'PreReq: Horde_' . $dep->name() . '-H4';
         echo "\n";
     } else if (in_array($dep->name(), array('Test'))) {
@@ -70,7 +69,7 @@ foreach ($horde_deps as $dep) {
     } else if (!$dep->isRequired()) {
         switch ($package->getName()) {
         case 'Core':
-            if (in_array($dep->name(), array('Db'))) {
+            if (in_array($dep->name(), array('Db', 'Kolab_Session', 'Kolab_Server', 'Tree'))) {
                 echo 'PreReq: Horde_' . $dep->name() . '-H4';
                 echo "\n";
             } else {
@@ -180,18 +179,19 @@ foreach ($ext_deps as $dep) {
 	%{l_shtool} install -c -m 644 %{l_value -s -a} %{S:9} $RPM_BUILD_ROOT%{l_prefix}/%{V_www_loc}/config/prefs.d/
 	%{l_shtool} install -c -m 644 %{l_value -s -a} %{S:10} $RPM_BUILD_ROOT%{l_prefix}/%{V_www_loc}/config/conf.d/
 	%{l_shtool} install -c -m 644 %{l_value -s -a} %{S:11} $RPM_BUILD_ROOT%{l_prefix}/%{V_www_loc}/config/
-	%{l_shtool} install -c -m 644 %{l_value -s -a} %{S:12} $RPM_BUILD_ROOT%{l_prefix}/%{V_www_loc}/config/
 	sed -i -e 's#@@@prefix@@@#%{l_prefix}#' $RPM_BUILD_ROOT%{l_prefix}/%{V_www_loc}/config/horde.local.php
 	sed -i -e 's#@@@lib_loc@@@#%{V_php_lib_loc}#' $RPM_BUILD_ROOT%{l_prefix}/%{V_www_loc}/config/horde.local.php
 
-	%{l_shtool} install -c -m 755 %{l_value -s -a} %{S:13} $RPM_BUILD_ROOT%{l_prefix}/var/kolab/hooks/delete
+	%{l_shtool} install -c -m 755 %{l_value -s -a} %{S:12} $RPM_BUILD_ROOT%{l_prefix}/var/kolab/hooks/delete
 	sed -i -e 's#@@@prefix@@@#%{l_prefix}#' $RPM_BUILD_ROOT%{l_prefix}/var/kolab/hooks/delete/hook-*
 	sed -i -e 's#@@@php_bin@@@#%{l_prefix}/bin/php#' $RPM_BUILD_ROOT%{l_prefix}/var/kolab/hooks/delete/hook-*
 
 
-        sqlite $RPM_BUILD_ROOT%{l_prefix}/var/kolab/webclient4_data/storage/horde.db < scripts/sql/horde_alarms.sql
-        sqlite $RPM_BUILD_ROOT%{l_prefix}/var/kolab/webclient4_data/storage/horde.db < scripts/sql/horde_perms.sql
-        sqlite $RPM_BUILD_ROOT%{l_prefix}/var/kolab/webclient4_data/storage/horde.db < scripts/sql/horde_syncml.sql
+        %{l_prefix}/bin/sqlite3 $RPM_BUILD_ROOT%{l_prefix}/var/kolab/webclient4_data/storage/horde.db < scripts/sql/horde_alarms.sql
+        %{l_prefix}/bin/sqlite3 $RPM_BUILD_ROOT%{l_prefix}/var/kolab/webclient4_data/storage/horde.db < scripts/sql/horde_datatree.sql
+        sed -i -e 's/AUTO_INCREMENT//' scripts/sql/horde_perms.sql
+        %{l_prefix}/bin/sqlite3 $RPM_BUILD_ROOT%{l_prefix}/var/kolab/webclient4_data/storage/horde.db < scripts/sql/horde_perms.sql
+        %{l_prefix}/bin/sqlite3 $RPM_BUILD_ROOT%{l_prefix}/var/kolab/webclient4_data/storage/horde.db < scripts/sql/horde_syncml.sql
 
 	for fl in $RPM_BUILD_ROOT%{l_prefix}/%{V_www_loc}/config/*.dist;do cp $fl ${fl/.dist/}; done
 <?php endif; ?>
