@@ -2,9 +2,9 @@
 
 $conf['debug_level'] = E_ALL;
 
-$conf['tmpdir'] = dirname(__FILE__) . '/../../../../webclient_data/tmp/';
+$conf['tmpdir'] = dirname(__FILE__) . '/../../../../webclient4_data/tmp/';
 
-$conf['sql']['database'] = dirname(__FILE__) . '/../../../../webclient_data/storage/horde.db';
+$conf['sql']['database'] = dirname(__FILE__) . '/../../../../webclient4_data/storage/horde.db';
 $conf['sql']['mode'] = '0640';
 $conf['sql']['charset'] = 'utf-8';
 $conf['sql']['phptype'] = 'sqlite';
@@ -15,12 +15,12 @@ $conf['auth']['params']['login_block'] = false;
 $conf['log']['priority'] = 'DEBUG';
 $conf['log']['ident'] = 'HORDE';
 $conf['log']['params'] = array();
-$conf['log']['name'] = dirname(__FILE__) . '/../../../../webclient_data/log/horde.log';
+$conf['log']['name'] = dirname(__FILE__) . '/../../../../webclient4_data/log/horde.log';
 $conf['log']['params']['append'] = true;
 $conf['log']['type'] = 'file';
 $conf['log']['enabled'] = true;
 
-$conf['prefs']['params']['directory'] = dirname(__FILE__) . '/../../../../webclient_data/storage/';
+$conf['prefs']['params']['directory'] = dirname(__FILE__) . '/../../../../webclient4_data/storage/';
 $conf['prefs']['driver'] = 'file';
 
 $conf['alarms']['params']['driverconfig'] = 'horde';
@@ -46,10 +46,10 @@ $conf['mailer']['params']['port'] = 587;
 $conf['mailer']['params']['auth'] = true;
 $conf['mailer']['type'] = 'smtp';
 
-$conf['token']['params']['token_dir'] = dirname(__FILE__) . '/../../../../webclient_data/tmp';
+$conf['token']['params']['token_dir'] = dirname(__FILE__) . '/../../../../webclient4_data/tmp';
 $conf['token']['driver'] = 'file';
 
-$conf['vfs']['params']['vfsroot'] = dirname(__FILE__) . '/../../../../webclient_data/storage';
+$conf['vfs']['params']['vfsroot'] = dirname(__FILE__) . '/../../../../webclient4_data/storage';
 $conf['vfs']['type'] = 'file';
 
 $conf['accounts']['driver'] = 'kolab';
