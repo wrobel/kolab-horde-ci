@@ -67,6 +67,18 @@ foreach ($horde_deps as $dep) {
     } else if (in_array($dep->name(), array('Test'))) {
         echo 'PreReq: Horde_' . $dep->name() . '-H4';
         echo "\n";
+    } else if (!$dep->isRequired()) {
+        switch ($package->getName()) {
+        case 'Core':
+            if (in_array($dep->name(), array('Db'))) {
+                echo 'PreReq: Horde_' . $dep->name() . '-H4';
+                echo "\n";
+            } else {
+                echo '#(Optional) PreReq: Horde_' . $dep->name() . '-H4';
+                echo "\n";
+            }
+            break;
+        }
     }
 }
 $ext_deps = $package->getDependencyHelper()->listAllExternalDependencies();
