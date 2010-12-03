@@ -1,5 +1,5 @@
 # Variables
-<?php if (in_array($package->getName(), array('horde'))): ?>
+<?php if (in_array($package->getName(), array('horde', 'imp'))): ?>
 %define         V_package <?php if ($package->getName() == 'Role') {echo $package->getName() . "\n";} else {echo $package->getName() . "-H4\n";} ?>
 <?php else: ?>
 %define         V_package Horde_<?php if ($package->getName() == 'Role') {echo $package->getName() . "\n";} else {echo $package->getName() . "-H4\n";} ?>
@@ -69,7 +69,16 @@ foreach ($horde_deps as $dep) {
     } else if (!$dep->isRequired()) {
         switch ($package->getName()) {
         case 'Core':
-            if (in_array($dep->name(), array('Db', 'Kolab_Session', 'Kolab_Server', 'Tree'))) {
+            if (in_array($dep->name(), array('Db', 'Kolab_Session', 'Kolab_Server', 'Tree', 'Http'))) {
+                echo 'PreReq: Horde_' . $dep->name() . '-H4';
+                echo "\n";
+            } else {
+                echo '#(Optional) PreReq: Horde_' . $dep->name() . '-H4';
+                echo "\n";
+            }
+            break;
+        case 'horde':
+            if (in_array($dep->name(), array('Feed'))) {
                 echo 'PreReq: Horde_' . $dep->name() . '-H4';
                 echo "\n";
             } else {

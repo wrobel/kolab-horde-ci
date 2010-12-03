@@ -52,12 +52,16 @@ JOBS=Alarm \
      Browser \
      Cache \
      Cli \
+     Compress \
      Constraint \
      Core \
      Date \
      Db \
      Exception \
+     Feed \
      Group \
+     Http \
+     Image \
      Injector \
      Kolab_Server \
      Kolab_Session \
@@ -66,6 +70,7 @@ JOBS=Alarm \
      LoginTasks \
      Mail \
      Mime \
+     Mime_Viewer \
      Nls \
      Notification \
      Perms \
@@ -78,14 +83,19 @@ JOBS=Alarm \
      Support \
      Template \
      Test \
+     Text_Filter \
+     Text_Flowed \
      Token \
      Tree \
      Translation \
      Url \
      Util \
-     View
+     VFS \
+     View \
+     Xml_Element
 
-APP_JOBS=horde
+APP_JOBS=horde \
+         imp
 
 .PHONY:install
 install: hudson-war hudson-plugins kolab-dependencies
