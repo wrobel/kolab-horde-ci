@@ -3,7 +3,7 @@
 
 %define         V_pear_package Core
 %define         V_package_url http://pear.horde.org/Core
-%define         V_version 0.1.0dev201011291802
+%define         V_version 0.1.0dev201012060751
 %define         V_release 1
 %define         V_sourceurl http://files.kolab.org/incoming/wrobel/Horde4
 %define         V_php_lib_loc php-h4
@@ -64,7 +64,7 @@ PreReq: Horde_Util-H4
 PreReq: Horde_Db-H4
 #(Optional) PreReq: Horde_Editor-H4
 #(Optional) PreReq: Horde_Form-H4
-#(Optional) PreReq: Horde_Http-H4
+PreReq: Horde_Http-H4
 #(Optional) PreReq: Horde_Icalendar-H4
 PreReq: Horde_Kolab_Server-H4
 PreReq: Horde_Kolab_Session-H4
@@ -72,6 +72,7 @@ PreReq: Horde_Kolab_Session-H4
 #(Optional) PreReq: Horde_Nls-H4
 #(Optional) PreReq: Horde_Text_Filter-H4
 PreReq: Horde_Tree-H4
+#(Optional) PreReq: Horde_VFS-H4
 
 # Package options
 %option       with_chroot              no

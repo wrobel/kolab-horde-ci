@@ -3,7 +3,7 @@
 
 %define         V_pear_package Token
 %define         V_package_url http://pear.horde.org/Token
-%define         V_version 0.1.0dev201011291806
+%define         V_version 0.1.0dev201012060758
 %define         V_release 1
 %define         V_sourceurl http://files.kolab.org/incoming/wrobel/Horde4
 %define         V_php_lib_loc php-h4
@@ -40,6 +40,7 @@ PreReq:       OpenPKG, openpkg >= 20070603
 PreReq:       php, php::with_pear = yes
 PreReq:       PEAR-Horde-Channel
 PreReq: Horde_Exception-H4
+PreReq: Horde_Translation-H4
 PreReq: Horde_Url-H4
 PreReq: Horde_Util-H4
 

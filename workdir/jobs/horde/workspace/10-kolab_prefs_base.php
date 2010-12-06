@@ -8,19 +8,19 @@ $prefGroups['language'] = array(
 );
 
 // date input format
-$_prefs['date_input_format'] = array(
-    'value' => 'year-month-day',
-    'locked' => false,
-    'shared' => true,
-    'type' => 'enum',
-    'enum' => array(
-        'day-month-year' => strftime('%d %b %Y'),
-        'month-day-year' => strftime('%b %d %Y'),
-        'year-day-month' => strftime('%Y %d %b'),
-        'year-month-day' => strftime('%Y %b %d'),
-    ),
-    'desc' => _("Choose order how to enter dates:"),
-);
+// $_prefs['date_input_format'] = array(
+//     'value' => 'year-month-day',
+//     'locked' => false,
+//     'shared' => true,
+//     'type' => 'enum',
+//     'enum' => array(
+//         'day-month-year' => strftime('%d %b %Y'),
+//         'month-day-year' => strftime('%b %d %Y'),
+//         'year-day-month' => strftime('%Y %d %b'),
+//         'year-month-day' => strftime('%Y %b %d'),
+//     ),
+//     'desc' => _("Choose order how to enter dates:"),
+// );
 
 // user full name for From: line
 // If you lock this preference, you must specify a value or a hook for it in
@@ -28,7 +28,6 @@ $_prefs['date_input_format'] = array(
 $_prefs['fullname'] = array(
     'value' => '',
     'locked' => false,
-    'shared' => true,
     'hook' => true,
     'type' => 'text',
     'desc' => _("Your full name:")
@@ -40,7 +39,6 @@ $_prefs['fullname'] = array(
 $_prefs['from_addr'] = array(
     'value' => '',
     'locked' => false,
-    'shared' => true,
     'hook' => true,
     'type' => 'text',
     'desc' =>  _("Your From: address:")
@@ -50,7 +48,14 @@ $_prefs['from_addr'] = array(
 $_prefs['theme'] = array(
     'value' => 'silver',
     'locked' => false,
-    'shared' => true,
     'type' => 'select',
     'desc' => _("Select your color scheme.")
+);
+
+// what application should we go to after login?
+// Application list is dynamically built when prefs screen is displayed
+$_prefs['initial_application'] = array(
+    'value' => 'imp',
+    'type' => 'enum',
+    'desc' => sprintf(_("What application should %s display after login?"), $GLOBALS['registry']->get('name'))
 );

@@ -57,11 +57,14 @@ JOBS=Alarm \
      Core \
      Date \
      Db \
+     Editor \
      Exception \
      Feed \
+     Form \
      Group \
      Http \
      Image \
+     Imap_Client \
      Injector \
      Kolab_Server \
      Kolab_Session \

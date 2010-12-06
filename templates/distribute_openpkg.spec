@@ -42,6 +42,20 @@ Source10:       10-kolab_conf_base.php
 Source11:       horde.local.php
 Source12:       hook-delete_webmail4_user.php
 <?php endif; ?>
+<?php if ($package->getName() == 'imp'): ?>
+Source1:        webclient4-imp_backends.php.template
+Source2:        webclient4-imp_conf.php.template
+Source3:        webclient4-imp_header.php.template
+Source4:        webclient4-imp_hooks.php.template
+Source5:        webclient4-imp_menu.php.template
+Source6:        webclient4-imp_mime_drivers.php.template
+Source7:        webclient4-imp_portal.php.template
+Source8:        webclient4-imp_prefs.php.template
+Source9:        conf.php
+Source10:       10-kolab_backends_base.php
+Source11:       10-kolab_conf_base.php
+Source12:       10-kolab_hooks_base.php
+<?php endif; ?>
 
 # List of patches
 Patch0:    package.patch
@@ -91,7 +105,7 @@ foreach ($horde_deps as $dep) {
 }
 $ext_deps = $package->getDependencyHelper()->listAllExternalDependencies();
 foreach ($ext_deps as $dep) {
-    if ($dep->isRequired()) {
+    if ($dep->isRequired() || in_array($dep->name(), array('Log', 'Net_Socket', 'Net_SMTP', 'Auth_SASL', 'Crypt_Blowfish', 'DB'))) {
         if ($dep->name() == 'PEAR') {
             continue;
         }
@@ -166,15 +180,15 @@ foreach ($ext_deps as $dep) {
         %endif
 
 <?php if ($package->getName() == 'horde'): ?>
+	%{l_shtool} install -d $RPM_BUILD_ROOT%{l_prefix}/var/kolab/hooks/delete
 	%{l_shtool} install -d $RPM_BUILD_ROOT%{l_prefix}/var/kolab/webclient4_data/storage
 	%{l_shtool} install -d $RPM_BUILD_ROOT%{l_prefix}/var/kolab/webclient4_data/log
 	%{l_shtool} install -d $RPM_BUILD_ROOT%{l_prefix}/var/kolab/webclient4_data/tmp
 	%{l_shtool} install -d $RPM_BUILD_ROOT%{l_prefix}/var/kolab/webclient4_data/sessions
 	%{l_shtool} install -d $RPM_BUILD_ROOT%{l_prefix}/etc/kolab/templates	
-	%{l_shtool} install -d $RPM_BUILD_ROOT%{l_prefix}/var/kolab/hooks/delete
 	%{l_shtool} install -d $RPM_BUILD_ROOT%{l_prefix}/%{V_www_loc}/config/conf.d
 	%{l_shtool} install -d $RPM_BUILD_ROOT%{l_prefix}/%{V_www_loc}/config/hooks.d
-	%{l_shtool} install -d $RPM_BUILD_ROOT%{l_prefix}/%{V_www_loc}/config/mime.d
+	%{l_shtool} install -d $RPM_BUILD_ROOT%{l_prefix}/%{V_www_loc}/config/mime_drivers.d
 	%{l_shtool} install -d $RPM_BUILD_ROOT%{l_prefix}/%{V_www_loc}/config/motd.d
 	%{l_shtool} install -d $RPM_BUILD_ROOT%{l_prefix}/%{V_www_loc}/config/nls.d
 	%{l_shtool} install -d $RPM_BUILD_ROOT%{l_prefix}/%{V_www_loc}/config/prefs.d
@@ -204,6 +218,28 @@ foreach ($ext_deps as $dep) {
 
 	for fl in $RPM_BUILD_ROOT%{l_prefix}/%{V_www_loc}/config/*.dist;do cp $fl ${fl/.dist/}; done
 <?php endif; ?>
+<?php if ($package->getName() == 'imp'): ?>
+	%{l_shtool} install -d $RPM_BUILD_ROOT%{l_prefix}/etc/kolab/templates	
+	%{l_shtool} install -d $RPM_BUILD_ROOT%{l_prefix}/%{V_www_loc}/imp/config/backends.d
+	%{l_shtool} install -d $RPM_BUILD_ROOT%{l_prefix}/%{V_www_loc}/imp/config/conf.d
+	%{l_shtool} install -d $RPM_BUILD_ROOT%{l_prefix}/%{V_www_loc}/imp/config/header.d
+	%{l_shtool} install -d $RPM_BUILD_ROOT%{l_prefix}/%{V_www_loc}/imp/config/hooks.d
+	%{l_shtool} install -d $RPM_BUILD_ROOT%{l_prefix}/%{V_www_loc}/imp/config/menu.d
+	%{l_shtool} install -d $RPM_BUILD_ROOT%{l_prefix}/%{V_www_loc}/imp/config/mime_drivers.d
+	%{l_shtool} install -d $RPM_BUILD_ROOT%{l_prefix}/%{V_www_loc}/imp/config/portal.d
+	%{l_shtool} install -d $RPM_BUILD_ROOT%{l_prefix}/%{V_www_loc}/imp/config/prefs.d
+
+	%{l_shtool} install -c -m 644 %{l_value -s -a} %{S:1} %{S:2} %{S:3} %{S:4} %{S:5} %{S:6} %{S:7} %{S:8}\
+	  $RPM_BUILD_ROOT%{l_prefix}/etc/kolab/templates
+	sed -i -e 's#@@@imp_confdir@@@#%{l_prefix}/%{V_www_loc}/imp/config#' $RPM_BUILD_ROOT%{l_prefix}/etc/kolab/templates/*.php.template
+
+	%{l_shtool} install -c -m 644 %{l_value -s -a} %{S:9} $RPM_BUILD_ROOT%{l_prefix}/%{V_www_loc}/imp/config/
+	%{l_shtool} install -c -m 644 %{l_value -s -a} %{S:10} $RPM_BUILD_ROOT%{l_prefix}/%{V_www_loc}/imp/config/backends.d/
+	%{l_shtool} install -c -m 644 %{l_value -s -a} %{S:11} $RPM_BUILD_ROOT%{l_prefix}/%{V_www_loc}/imp/config/conf.d/
+	%{l_shtool} install -c -m 644 %{l_value -s -a} %{S:12} $RPM_BUILD_ROOT%{l_prefix}/%{V_www_loc}/imp/config/hooks.d/
+
+	for fl in $RPM_BUILD_ROOT%{l_prefix}/%{V_www_loc}/imp/config/*.dist;do cp $fl ${fl/.dist/}; done
+<?php endif; ?>
 
         %{l_rpmtool} files -v -ofiles -r$RPM_BUILD_ROOT %{l_files_std} \
 <?php if ($package->getName() == 'horde'): ?>
@@ -221,6 +257,17 @@ foreach ($ext_deps as $dep) {
             %dir '%defattr(-,%{l_nusr},%{l_ngrp})' %{l_prefix}/var/kolab/webclient4_data/tmp \
             %dir '%defattr(-,%{l_nusr},%{l_ngrp})' %{l_prefix}/var/kolab/webclient4_data/sessions \
 	    '%defattr(-,%{l_nusr},%{l_ngrp})' %{l_prefix}/var/kolab/www/client4/config/conf.php
+<?php endif; ?>
+<?php if ($package->getName() == 'imp'): ?>
+            '%config %{l_prefix}/etc/kolab/templates/webclient4-imp_backends.php.template' \
+	    '%config %{l_prefix}/etc/kolab/templates/webclient4-imp_conf.php.template' \
+            '%config %{l_prefix}/etc/kolab/templates/webclient4-imp_header.php.template' \
+            '%config %{l_prefix}/etc/kolab/templates/webclient4-imp_hooks.php.template' \
+            '%config %{l_prefix}/etc/kolab/templates/webclient4-imp_menu.php.template' \
+            '%config %{l_prefix}/etc/kolab/templates/webclient4-imp_mime_drivers.php.template' \
+            '%config %{l_prefix}/etc/kolab/templates/webclient4-imp_portal.php.template' \
+            '%config %{l_prefix}/etc/kolab/templates/webclient4-imp_prefs.php.template' \
+	    '%defattr(-,%{l_nusr},%{l_ngrp})' %{l_prefix}/var/kolab/www/client4/imp/config/conf.php
 <?php endif; ?>
 
 %clean

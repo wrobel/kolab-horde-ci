@@ -10,6 +10,10 @@ $conf['urls']['pretty'] = false;
 
 $conf['tmpdir'] = dirname(__FILE__) . '/../../../../webclient4_data/tmp/';
 
+$conf['menu']['links']['logout'] = 'authenticated';
+$conf['menu']['links']['prefs'] = 'authenticated';
+$conf['menu']['links']['help'] = 'authenticated';
+
 $conf['sql']['database'] = dirname(__FILE__) . '/../../../../webclient4_data/storage/horde.db';
 $conf['sql']['mode'] = '0640';
 $conf['sql']['charset'] = 'utf-8';
@@ -55,10 +59,10 @@ $conf['cache']['params']['dir'] = $conf['tmpdir'];
 $conf['cache']['params']['sub'] = 0;
 $conf['cache']['driver'] = 'file';
 
-$conf['mailer']['params']['host'] = 'localhost';
-$conf['mailer']['params']['port'] = 587;
-$conf['mailer']['params']['auth'] = true;
 $conf['mailer']['type'] = 'smtp';
+$conf['mailer']['params']['auth'] = true;
+$conf['mailer']['params']['port'] = 25;
+// @todo: Reactivate for Kolab Server 2.3.*                                  //$conf['mailer']['params']['port'] = 587;                                   
 
 $conf['token']['params']['token_dir'] = dirname(__FILE__) . '/../../../../webclient4_data/tmp';
 $conf['token']['driver'] = 'file';
@@ -81,3 +85,5 @@ $conf['kolab']['misc']['multidomain'] = false;
 $conf['kolab']['cache_folders'] = true;
 $conf['kolab']['enabled'] = true;
 $conf['kolab']['freebusy']['server'] = 'https://localhost/freebusy';
+
+$conf['kolab']['session']['debug'] = true;

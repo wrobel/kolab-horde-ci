@@ -1,5 +1,5 @@
 KOLAB_META_START
-TARGET=@@@horde_confdir@@@/mime.d/20-kolab_local.php
+TARGET=@@@horde_confdir@@@/mime_drivers.d/20-kolab_local.php
 PERMISSIONS=0400
 OWNERSHIP=@@@webserver_usr@@@:@@@webserver_grp@@@
 KOLAB_META_END

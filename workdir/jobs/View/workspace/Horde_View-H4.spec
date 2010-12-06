@@ -3,7 +3,7 @@
 
 %define         V_pear_package View
 %define         V_package_url http://pear.horde.org/View
-%define         V_version 0.2.1dev201011291807
+%define         V_version 0.2.1dev201012060759
 %define         V_release 1
 %define         V_sourceurl http://files.kolab.org/incoming/wrobel/Horde4
 %define         V_php_lib_loc php-h4

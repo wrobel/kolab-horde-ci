@@ -3,7 +3,7 @@
 
 %define         V_pear_package horde
 %define         V_package_url http://pear.horde.org/horde
-%define         V_version 4.0.0dev201011292030
+%define         V_version 4.0.0dev201012061047
 %define         V_release 1
 %define         V_sourceurl http://files.kolab.org/incoming/wrobel/Horde4
 %define         V_php_lib_loc php-h4
@@ -55,6 +55,9 @@ PreReq: Horde_Template-H4
 PreReq: Horde_Token-H4
 PreReq: Horde_Tree-H4
 PreReq: Horde_View-H4
+PreReq: Horde_Feed-H4
+#(Optional) PreReq: Horde_Service_Facebook-H4
+#(Optional) PreReq: Horde_Service_Twitter-H4
 
 # Package options
 %option       with_chroot              no
@@ -106,15 +109,15 @@ applications.
                 cp -a $RPM_BUILD_ROOT/%{l_prefix}/lib/%{V_php_lib_loc} $RPM_BUILD_ROOT%{l_prefix}/var/kolab/www/%{l_prefix}/lib/
         %endif
 
+	%{l_shtool} install -d $RPM_BUILD_ROOT%{l_prefix}/var/kolab/hooks/delete
 	%{l_shtool} install -d $RPM_BUILD_ROOT%{l_prefix}/var/kolab/webclient4_data/storage
 	%{l_shtool} install -d $RPM_BUILD_ROOT%{l_prefix}/var/kolab/webclient4_data/log
 	%{l_shtool} install -d $RPM_BUILD_ROOT%{l_prefix}/var/kolab/webclient4_data/tmp
 	%{l_shtool} install -d $RPM_BUILD_ROOT%{l_prefix}/var/kolab/webclient4_data/sessions
 	%{l_shtool} install -d $RPM_BUILD_ROOT%{l_prefix}/etc/kolab/templates	
-	%{l_shtool} install -d $RPM_BUILD_ROOT%{l_prefix}/var/kolab/hooks/delete
 	%{l_shtool} install -d $RPM_BUILD_ROOT%{l_prefix}/%{V_www_loc}/config/conf.d
 	%{l_shtool} install -d $RPM_BUILD_ROOT%{l_prefix}/%{V_www_loc}/config/hooks.d
-	%{l_shtool} install -d $RPM_BUILD_ROOT%{l_prefix}/%{V_www_loc}/config/mime.d
+	%{l_shtool} install -d $RPM_BUILD_ROOT%{l_prefix}/%{V_www_loc}/config/mime_drivers.d
 	%{l_shtool} install -d $RPM_BUILD_ROOT%{l_prefix}/%{V_www_loc}/config/motd.d
 	%{l_shtool} install -d $RPM_BUILD_ROOT%{l_prefix}/%{V_www_loc}/config/nls.d
 	%{l_shtool} install -d $RPM_BUILD_ROOT%{l_prefix}/%{V_www_loc}/config/prefs.d
