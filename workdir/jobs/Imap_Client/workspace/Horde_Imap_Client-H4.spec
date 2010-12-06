@@ -3,7 +3,7 @@
 
 %define         V_pear_package Imap_Client
 %define         V_package_url http://pear.horde.org/Imap_Client
-%define         V_version 0.0.1dev201012060754
+%define         V_version 0.0.1dev201012061500
 %define         V_release 1
 %define         V_sourceurl http://files.kolab.org/incoming/wrobel/Horde4
 %define         V_php_lib_loc php-h4
@@ -39,6 +39,7 @@ BuildPreReq:  PEAR-Horde-Channel
 PreReq:       OpenPKG, openpkg >= 20070603
 PreReq:       php, php::with_pear = yes
 PreReq:       PEAR-Horde-Channel
+PreReq: PEAR-Auth_SASL-H4
 
 # Package options
 %option       with_chroot              no

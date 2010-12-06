@@ -167,6 +167,7 @@ $(JOBS:%=job-%):
 	mkdir -p workdir/jobs/$(@:job-%=%)/workspace/
 	touch workdir/jobs/$(@:job-%=%)/workspace/package.patch
 	echo "*.tgz" > workdir/jobs/$(@:job-%=%)/workspace/.gitignore
+	echo "*.rpm" >> workdir/jobs/$(@:job-%=%)/workspace/.gitignore
 	cp workdir/jobs/Role/.gitignore workdir/jobs/$(@:job-%=%)/.gitignore
 
 .PHONY:$(APP_JOBS:%=job-%)
@@ -177,6 +178,7 @@ $(APP_JOBS:%=job-%):
 	mkdir -p workdir/jobs/$(@:job-%=%)/workspace/
 	touch workdir/jobs/$(@:job-%=%)/workspace/package.patch
 	echo "*.tgz" > workdir/jobs/$(@:job-%=%)/workspace/.gitignore
+	echo "*.rpm" >> workdir/jobs/$(@:job-%=%)/workspace/.gitignore
 	cp workdir/jobs/Role/.gitignore workdir/jobs/$(@:job-%=%)/.gitignore
 
 .PHONY:start

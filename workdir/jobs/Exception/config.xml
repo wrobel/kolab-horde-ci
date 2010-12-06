@@ -23,8 +23,10 @@ php -d include_path=&quot;.:${WORKSPACE}/../../php-hudson-tools/workspace/pear/p
 mkdir -p /kolab/RPM/SRC/Horde_Exception-H4
 rsync -avz --delete-after ${WORKSPACE}/ /kolab/RPM/SRC/Horde_Exception-H4/
 /kolab/bin/openpkg rpm -ba Horde_Exception-H4.spec
-/kolab/bin/openpkg rpm -ihv --force /kolab/RPM/PKG/Horde_Exception-H4-*.`/kolab/bin/openpkg rpm -q --qf=&quot;&#37;{ARCH}-&#37;{OS}&quot; openpkg`-kolab.rpm
-rm -rf /kolab/RPM/PGK/Horde_Exception-H4-*
+export PKG=/kolab/RPM/PKG/Horde_Exception-H4-*.`/kolab/bin/openpkg rpm -q --qf=&quot;&#37;{ARCH}-&#37;{OS}&quot; openpkg`-kolab.rpm
+/kolab/bin/openpkg rpm -ihv --force $PKG
+cp $PKG ${WORKSPACE}/
+rm -rf /kolab/RPM/PKG/Horde_Exception-H4-*
     </command>
     </hudson.tasks.Shell>
     <!--<hudson.tasks.Ant>

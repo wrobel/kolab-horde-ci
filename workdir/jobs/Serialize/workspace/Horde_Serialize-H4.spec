@@ -3,7 +3,7 @@
 
 %define         V_pear_package Serialize
 %define         V_package_url http://pear.horde.org/Serialize
-%define         V_version 0.1.0dev201012060757
+%define         V_version 0.1.0dev201012061503
 %define         V_release 1
 %define         V_sourceurl http://files.kolab.org/incoming/wrobel/Horde4
 %define         V_php_lib_loc php-h4
@@ -41,6 +41,7 @@ PreReq:       php, php::with_pear = yes
 PreReq:       PEAR-Horde-Channel
 PreReq: Horde_Exception-H4
 PreReq: Horde_Util-H4
+PreReq: PEAR-DB-H4
 
 # Package options
 %option       with_chroot              no

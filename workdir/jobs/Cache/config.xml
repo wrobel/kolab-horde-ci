@@ -4,7 +4,7 @@
   <description>This package provides a simple, functional caching API,
 with the option to store the cached data on the filesystem, in one of
 the PHP opcode cache systems (APC, eAcclerator, XCache, or Zend
-Performance Suite&apos;s content cache), memcached, or an SQL table.</description>
+Performance Suite's content cache), memcached, or an SQL table.</description>
   <logRotator>
     <daysToKeep>5</daysToKeep>
     <numToKeep>10</numToKeep>
@@ -26,10 +26,15 @@ php -d include_path=&quot;.:${WORKSPACE}/../../php-hudson-tools/workspace/pear/p
 mkdir -p /kolab/RPM/SRC/Horde_Cache-H4
 rsync -avz --delete-after ${WORKSPACE}/ /kolab/RPM/SRC/Horde_Cache-H4/
 /kolab/bin/openpkg rpm -ba Horde_Cache-H4.spec
-/kolab/bin/openpkg rpm -ihv --force /kolab/RPM/PKG/Horde_Cache-H4-*.`/kolab/bin/openpkg rpm -q --qf=&quot;%{ARCH}-%{OS}&quot; openpkg`-kolab.rpm
-rm -rf /kolab/RPM/PGK/Horde_Cache-H4-*
+export PKG=/kolab/RPM/PKG/Horde_Cache-H4-*.`/kolab/bin/openpkg rpm -q --qf=&quot;&#37;{ARCH}-&#37;{OS}&quot; openpkg`-kolab.rpm
+/kolab/bin/openpkg rpm -ihv --force $PKG
+cp $PKG ${WORKSPACE}/
+rm -rf /kolab/RPM/PKG/Horde_Cache-H4-*
     </command>
     </hudson.tasks.Shell>
+    <!--<hudson.tasks.Ant>
+      <targets></targets>
+    </hudson.tasks.Ant>-->
   </builders>
   <publishers>
     <hudson.tasks.Mailer>

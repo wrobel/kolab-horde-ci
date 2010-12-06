@@ -3,7 +3,7 @@
 
 %define         V_pear_package Mail
 %define         V_package_url http://pear.horde.org/Mail
-%define         V_version 0.1.0dev201012060755
+%define         V_version 0.1.0dev201012061501
 %define         V_release 1
 %define         V_sourceurl http://files.kolab.org/incoming/wrobel/Horde4
 %define         V_php_lib_loc php-h4
@@ -40,6 +40,7 @@ PreReq:       OpenPKG, openpkg >= 20070603
 PreReq:       php, php::with_pear = yes
 PreReq:       PEAR-Horde-Channel
 PreReq: Horde_Exception-H4
+PreReq: PEAR-Net_SMTP-H4
 
 # Package options
 %option       with_chroot              no
