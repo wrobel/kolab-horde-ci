@@ -1,0 +1,3 @@
+[submodule "hudson"]
+	path = hudson
+	url = git://github.com/wrobel/hudson-install.git
