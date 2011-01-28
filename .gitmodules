@@ -1,3 +1,6 @@
 [submodule "hudson"]
 	path = hudson
 	url = git://github.com/wrobel/hudson-install.git
+[submodule "horde-packaging"]
+	path = horde-packaging
+	url = git://github.com/wrobel/horde-packaging.git
