@@ -1,8 +1,8 @@
 # Variables
-<?php if (in_array($package->getName(), array('horde', 'imp'))): ?>
-%define         V_package <?php if ($package->getName() == 'Role') {echo $package->getName() . "\n";} else {echo $package->getName() . "-H4\n";} ?>
+<?php if (in_array($package->getName(), array('content', 'horde', 'imp', 'ingo', 'kronolith', 'mnemo', 'nag', 'turba'))): ?>
+%define         V_package <?php echo $package->getName() . "-H4\n"; $target = $package->getName() . '-H4.spec'; ?>
 <?php else: ?>
-%define         V_package Horde_<?php if ($package->getName() == 'Role') {echo $package->getName() . "\n";} else {echo $package->getName() . "-H4\n";} ?>
+%define         V_package <?php if ($package->getName() == 'Role') {echo 'Horde_' . $package->getName() . "\n";  $target = 'Horde_' . $package->getName() . '.spec';} else {echo 'Horde_' . $package->getName() . "-H4\n";  $target = 'Horde_' . $package->getName() . '-H4.spec';} ?>
 <?php endif; ?>
 
 %define         V_pear_package <?php echo $package->getName() . "\n"; ?>
@@ -57,9 +57,6 @@ Source11:       10-kolab_conf_base.php
 Source12:       10-kolab_hooks_base.php
 <?php endif; ?>
 
-# List of patches
-Patch0:    package.patch
-
 # Build Info
 Prefix:	   %{l_prefix}
 BuildRoot: %{l_buildroot}
@@ -75,8 +72,13 @@ PreReq:       PEAR-Horde-Channel
 $horde_deps = $package->getDependencyHelper()->listAllHordeDependencies();
 foreach ($horde_deps as $dep) {
     if ($dep->isRequired() && !in_array($dep->name(), array('Core', 'DataTree', 'Kolab_Storage'))) {
-        echo 'PreReq: Horde_' . $dep->name() . '-H4';
-        echo "\n";
+        if ($dep->name() == 'horde') {
+            echo 'PreReq: ' . $dep->name() . '-H4';
+            echo "\n";
+        } else {
+            echo 'PreReq: Horde_' . $dep->name() . '-H4';
+            echo "\n";
+        }
     } else if (in_array($dep->name(), array('Test'))) {
         echo 'PreReq: Horde_' . $dep->name() . '-H4';
         echo "\n";
@@ -141,13 +143,9 @@ foreach ($ext_deps as $dep) {
 
 	cat ../package.xml | sed -e 's/md5sum="[^"]*"//' > package.xml
 
-        if [ -n "`cat %{PATCH0}`" ]; then
-	    %patch -p1 -P 0
-	fi
-
-<?php if ($package->getName() == 'horde'): ?>
-        sed -i -e 's#/usr/bin/env php#%{l_prefix}/bin/php#' bin/*
-<?php endif; ?>
+        if [ -e bin ]; then
+          find bin -type f | xargs sed -i -e 's#/usr/bin/env php#%{l_prefix}/bin/php#'
+        fi
 
 %build
 
@@ -160,7 +158,7 @@ foreach ($ext_deps as $dep) {
         else
           PHP_BIN_DIR="bin"
         fi
-        env PHP_PEAR_PHP_BIN="%{l_prefix}/bin/php -d safe_mode=off -d memory_limit=40M"\
+        env PHP_PEAR_PHP_BIN="<?php if ($package->getName() == 'Role') {echo '/usr';} else {echo '%{l_prefix}';} ?>/bin/php -d safe_mode=off -d memory_limit=40M"\
             PHP_PEAR_CACHE_DIR="/tmp/pear/cache"                                       \
 	    %{l_prefix}/bin/pear -d horde_dir="%{l_prefix}/%{V_www_loc}"               \
 	                         -d bin_dir="%{l_prefix}/$PHP_BIN_DIR"                 \
@@ -209,13 +207,6 @@ foreach ($ext_deps as $dep) {
 	sed -i -e 's#@@@prefix@@@#%{l_prefix}#' $RPM_BUILD_ROOT%{l_prefix}/var/kolab/hooks/delete/hook-*
 	sed -i -e 's#@@@php_bin@@@#%{l_prefix}/bin/php#' $RPM_BUILD_ROOT%{l_prefix}/var/kolab/hooks/delete/hook-*
 
-
-        %{l_prefix}/bin/sqlite3 $RPM_BUILD_ROOT%{l_prefix}/var/kolab/webclient4_data/storage/horde.db < scripts/sql/horde_alarms.sql
-        %{l_prefix}/bin/sqlite3 $RPM_BUILD_ROOT%{l_prefix}/var/kolab/webclient4_data/storage/horde.db < scripts/sql/horde_datatree.sql
-        sed -i -e 's/AUTO_INCREMENT//' scripts/sql/horde_perms.sql
-        %{l_prefix}/bin/sqlite3 $RPM_BUILD_ROOT%{l_prefix}/var/kolab/webclient4_data/storage/horde.db < scripts/sql/horde_perms.sql
-        %{l_prefix}/bin/sqlite3 $RPM_BUILD_ROOT%{l_prefix}/var/kolab/webclient4_data/storage/horde.db < scripts/sql/horde_syncml.sql
-
 	for fl in $RPM_BUILD_ROOT%{l_prefix}/%{V_www_loc}/config/*.dist;do cp $fl ${fl/.dist/}; done
 <?php endif; ?>
 <?php if ($package->getName() == 'imp'): ?>
@@ -250,10 +241,8 @@ foreach ($ext_deps as $dep) {
             '%config %{l_prefix}/etc/kolab/templates/webclient4-config_nls.php.template' \
             '%config %{l_prefix}/etc/kolab/templates/webclient4-config_prefs.php.template' \
             '%config %{l_prefix}/etc/kolab/templates/webclient4-config_registry.php.template' \
-            '%config(noreplace) %{l_prefix}/var/kolab/webclient4_data/storage/horde.db' \
             %dir '%defattr(-,%{l_nusr},%{l_ngrp})' %{l_prefix}/var/kolab/webclient4_data/log \
             %dir '%defattr(-,%{l_nusr},%{l_ngrp})' %{l_prefix}/var/kolab/webclient4_data/storage \
-            %dir '%defattr(-,%{l_nusr},%{l_ngrp})' %{l_prefix}/var/kolab/webclient4_data/storage/horde.db \
             %dir '%defattr(-,%{l_nusr},%{l_ngrp})' %{l_prefix}/var/kolab/webclient4_data/tmp \
             %dir '%defattr(-,%{l_nusr},%{l_ngrp})' %{l_prefix}/var/kolab/webclient4_data/sessions \
 	    '%defattr(-,%{l_nusr},%{l_ngrp})' %{l_prefix}/var/kolab/www/client4/config/conf.php
