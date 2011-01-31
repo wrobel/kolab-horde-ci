@@ -3,7 +3,7 @@
 
 %define         V_pear_package Imap_Client
 %define         V_package_url http://pear.horde.org/Imap_Client
-%define         V_version 0.0.1dev201012061500
+%define         V_version 0.0.1dev201101300448
 %define         V_release 1
 %define         V_sourceurl http://files.kolab.org/incoming/wrobel/Horde4
 %define         V_php_lib_loc php-h4
@@ -24,9 +24,6 @@ Distribution:	OpenPKG
 
 # List of Sources
 Source:    %{V_sourceurl}/%{V_pear_package}-%{V_version}.tgz
-
-# List of patches
-Patch0:    package.patch
 
 # Build Info
 Prefix:	   %{l_prefix}
@@ -53,10 +50,9 @@ This package provides an abstracted API interface to various
 
 	cat ../package.xml | sed -e 's/md5sum="[^"]*"//' > package.xml
 
-        if [ -n "`cat %{PATCH0}`" ]; then
-	    %patch -p1 -P 0
-	fi
-
+        if [ -e bin ]; then
+          find bin -type f | xargs sed -i -e 's#/usr/bin/env php#%{l_prefix}/bin/php#'
+        fi
 
 %build
 

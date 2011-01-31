@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<project>
+  <actions/>
+  <description>TODO</description>
+  <logRotator>
+    <daysToKeep>5</daysToKeep>
+    <numToKeep>10</numToKeep>
+    <artifactDaysToKeep>-1</artifactDaysToKeep>
+    <artifactNumToKeep>-1</artifactNumToKeep>
+  </logRotator>
+  <keepDependencies>false</keepDependencies>
+  <properties/>
+  <scm class="hudson.scm.NullSCM"/>
+  <canRoam>true</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers class="vector"/>
+  <concurrentBuild>false</concurrentBuild>
+  <builders>
+    <hudson.tasks.Shell>
+      <command>rm -rf ${WORKSPACE}/*.tgz ${WORKSPACE}/*.spec ${WORKSPACE}/*.src.rpm
+php -d include_path=&quot;.:${WORKSPACE}/../../php-hudson-tools/workspace/pear/pear/php&quot; ${WORKSPACE}/../../php-hudson-tools/workspace/pear/pear/horde-components -t ../../../../templates --pearrc ${WORKSPACE}/../../php-hudson-tools/workspace/pear/pear/../.pearrc -t ${WORKSPACE}/../../../../templates/openpkg -D ${WORKSPACE} -N ${WORKSPACE}/../../horde-git/workspace/framework/DataTree
+mkdir -p /kolab/RPM/SRC/Horde_DataTree-H4
+rsync -avz --delete-after ${WORKSPACE}/ /kolab/RPM/SRC/Horde_DataTree-H4/
+mv ${WORKSPACE}/../*.tgz /kolab/RPM/SRC/Horde_DataTree-H4/
+if [ &quot;`/kolab/bin/openpkg rpm -q Horde_DataTree-H4`&quot; != &quot;package Horde_DataTree-H4 is not installed&quot; ]; then for pkg in `/kolab/bin/openpkg rpm -q Horde_DataTree-H4`;do echo $pkg; /kolab/bin/openpkg rpm --nodeps -e $pkg;done;fi
+/kolab/bin/openpkg rpm -ba Horde_DataTree-H4.spec
+/kolab/bin/openpkg rpm -Uhv --force /kolab/RPM/PKG/Horde_DataTree-H4-*.`/kolab/bin/openpkg rpm -q --qf=&quot;&#37;{ARCH}-&#37;{OS}&quot; openpkg`-kolab.rpm
+cp /kolab/RPM/PKG/Horde_DataTree-H4-*.src.rpm ${WORKSPACE}/
+rm -rf /kolab/RPM/PKG/Horde_DataTree-H4-*
+rm -rf /kolab/RPM/SRC/Horde_DataTree-H4*
+rm -rf /kolab/RPM/TMP/*
+    </command>
+    </hudson.tasks.Shell>
+    <!--<hudson.tasks.Ant>
+      <targets></targets>
+    </hudson.tasks.Ant>-->
+  </builders>
+  <publishers>
+    <hudson.tasks.Mailer>
+      <recipients>wrobel@pardus.de</recipients>
+      <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
+      <sendToIndividuals>false</sendToIndividuals>
+    </hudson.tasks.Mailer>
+  </publishers>
+  <buildWrappers/>
+</project>

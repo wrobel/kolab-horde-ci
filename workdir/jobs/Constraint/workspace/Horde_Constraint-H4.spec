@@ -3,7 +3,7 @@
 
 %define         V_pear_package Constraint
 %define         V_package_url http://pear.horde.org/Constraint
-%define         V_version 0.1.0dev201012061457
+%define         V_version 0.1.0dev201101300443
 %define         V_release 1
 %define         V_sourceurl http://files.kolab.org/incoming/wrobel/Horde4
 %define         V_php_lib_loc php-h4
@@ -24,9 +24,6 @@ Distribution:	OpenPKG
 
 # List of Sources
 Source:    %{V_sourceurl}/%{V_pear_package}-%{V_version}.tgz
-
-# List of patches
-Patch0:    package.patch
 
 # Build Info
 Prefix:	   %{l_prefix}
@@ -51,10 +48,9 @@ This package provides a programmatic way of building constraints that evaluate t
 
 	cat ../package.xml | sed -e 's/md5sum="[^"]*"//' > package.xml
 
-        if [ -n "`cat %{PATCH0}`" ]; then
-	    %patch -p1 -P 0
-	fi
-
+        if [ -e bin ]; then
+          find bin -type f | xargs sed -i -e 's#/usr/bin/env php#%{l_prefix}/bin/php#'
+        fi
 
 %build
 

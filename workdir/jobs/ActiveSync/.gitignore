@@ -2,5 +2,6 @@
 /lastStable
 /lastSuccessful
 /nextBuildNumber
-/scm-polling.log
-/workspace
+*.tgz
+*.rpm
+*.spec

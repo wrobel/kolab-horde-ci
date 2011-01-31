@@ -3,7 +3,7 @@
 
 %define         V_pear_package Core
 %define         V_package_url http://pear.horde.org/Core
-%define         V_version 0.1.0dev201012061457
+%define         V_version 0.1.0dev201101300443
 %define         V_release 1
 %define         V_sourceurl http://files.kolab.org/incoming/wrobel/Horde4
 %define         V_php_lib_loc php-h4
@@ -25,9 +25,6 @@ Distribution:	OpenPKG
 # List of Sources
 Source:    %{V_sourceurl}/%{V_pear_package}-%{V_version}.tgz
 
-# List of patches
-Patch0:    package.patch
-
 # Build Info
 Prefix:	   %{l_prefix}
 BuildRoot: %{l_buildroot}
@@ -39,6 +36,7 @@ BuildPreReq:  PEAR-Horde-Channel
 PreReq:       OpenPKG, openpkg >= 20070603
 PreReq:       php, php::with_pear = yes
 PreReq:       PEAR-Horde-Channel
+PreReq: Horde_ActiveSync-H4
 PreReq: Horde_Alarm-H4
 PreReq: Horde_Auth-H4
 PreReq: Horde_Autoloader-H4
@@ -47,15 +45,19 @@ PreReq: Horde_Block-H4
 PreReq: Horde_Cache-H4
 PreReq: Horde_Cli-H4
 PreReq: Horde_Exception-H4
+PreReq: Horde_History-H4
 PreReq: Horde_Injector-H4
+PreReq: Horde_Lock-H4
 PreReq: Horde_Log-H4
 PreReq: Horde_LoginTasks-H4
 PreReq: Horde_Mime-H4
+PreReq: Horde_Mime_Viewer-H4
 PreReq: Horde_Notification-H4
 PreReq: Horde_Perms-H4
 PreReq: Horde_Prefs-H4
 PreReq: Horde_Secret-H4
 PreReq: Horde_SessionHandler-H4
+PreReq: Horde_Share-H4
 PreReq: Horde_Support-H4
 PreReq: Horde_Translation-H4
 PreReq: Horde_Url-H4
@@ -70,6 +72,7 @@ PreReq: Horde_Kolab_Server-H4
 PreReq: Horde_Kolab_Session-H4
 #(Optional) PreReq: Horde_Kolab_Storage-H4
 #(Optional) PreReq: Horde_Nls-H4
+#(Optional) PreReq: Horde_Service_Twitter-H4
 #(Optional) PreReq: Horde_Text_Filter-H4
 PreReq: Horde_Tree-H4
 #(Optional) PreReq: Horde_VFS-H4
@@ -87,10 +90,9 @@ Application Framework.
 
 	cat ../package.xml | sed -e 's/md5sum="[^"]*"//' > package.xml
 
-        if [ -n "`cat %{PATCH0}`" ]; then
-	    %patch -p1 -P 0
-	fi
-
+        if [ -e bin ]; then
+          find bin -type f | xargs sed -i -e 's#/usr/bin/env php#%{l_prefix}/bin/php#'
+        fi
 
 %build
 

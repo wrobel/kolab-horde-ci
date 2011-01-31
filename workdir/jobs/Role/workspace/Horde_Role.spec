@@ -3,7 +3,7 @@
 
 %define         V_pear_package Role
 %define         V_package_url http://pear.horde.org/Role
-%define         V_version 0.2.0dev201012061503
+%define         V_version 0.2.0dev201101300451
 %define         V_release 1
 %define         V_sourceurl http://files.kolab.org/incoming/wrobel/Horde4
 %define         V_php_lib_loc php
@@ -24,9 +24,6 @@ Distribution:	OpenPKG
 
 # List of Sources
 Source:    %{V_sourceurl}/%{V_pear_package}-%{V_version}.tgz
-
-# List of patches
-Patch0:    package.patch
 
 # Build Info
 Prefix:	   %{l_prefix}
@@ -52,10 +49,9 @@ This package provides a method for PEAR to install Horde
 
 	cat ../package.xml | sed -e 's/md5sum="[^"]*"//' > package.xml
 
-        if [ -n "`cat %{PATCH0}`" ]; then
-	    %patch -p1 -P 0
-	fi
-
+        if [ -e bin ]; then
+          find bin -type f | xargs sed -i -e 's#/usr/bin/env php#%{l_prefix}/bin/php#'
+        fi
 
 %build
 
@@ -68,7 +64,7 @@ This package provides a method for PEAR to install Horde
         else
           PHP_BIN_DIR="bin"
         fi
-        env PHP_PEAR_PHP_BIN="%{l_prefix}/bin/php -d safe_mode=off -d memory_limit=40M"\
+        env PHP_PEAR_PHP_BIN="/usr/bin/php -d safe_mode=off -d memory_limit=40M"\
             PHP_PEAR_CACHE_DIR="/tmp/pear/cache"                                       \
 	    %{l_prefix}/bin/pear -d horde_dir="%{l_prefix}/%{V_www_loc}"               \
 	                         -d bin_dir="%{l_prefix}/$PHP_BIN_DIR"                 \

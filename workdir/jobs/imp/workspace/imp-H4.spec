@@ -3,7 +3,7 @@
 
 %define         V_pear_package imp
 %define         V_package_url http://pear.horde.org/imp
-%define         V_version 5.0.0dev201012061507
+%define         V_version 5.0.0dev201101302321
 %define         V_release 1
 %define         V_sourceurl http://files.kolab.org/incoming/wrobel/Horde4
 %define         V_php_lib_loc php-h4
@@ -37,9 +37,6 @@ Source10:       10-kolab_backends_base.php
 Source11:       10-kolab_conf_base.php
 Source12:       10-kolab_hooks_base.php
 
-# List of patches
-Patch0:    package.patch
-
 # Build Info
 Prefix:	   %{l_prefix}
 BuildRoot: %{l_buildroot}
@@ -51,7 +48,7 @@ BuildPreReq:  PEAR-Horde-Channel
 PreReq:       OpenPKG, openpkg >= 20070603
 PreReq:       php, php::with_pear = yes
 PreReq:       PEAR-Horde-Channel
-PreReq: Horde_horde-H4
+PreReq: horde-H4
 PreReq: Horde_Editor-H4
 PreReq: Horde_Form-H4
 PreReq: Horde_Image-H4
@@ -75,10 +72,9 @@ multiple folders, and multiple-language support.
 
 	cat ../package.xml | sed -e 's/md5sum="[^"]*"//' > package.xml
 
-        if [ -n "`cat %{PATCH0}`" ]; then
-	    %patch -p1 -P 0
-	fi
-
+        if [ -e bin ]; then
+          find bin -type f | xargs sed -i -e 's#/usr/bin/env php#%{l_prefix}/bin/php#'
+        fi
 
 %build
 

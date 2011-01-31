@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <hudson>
-  <version>1.384</version>
+  <version>1.395</version>
   <numExecutors>1</numExecutors>
   <mode>NORMAL</mode>
   <useSecurity>true</useSecurity>
@@ -8,6 +8,7 @@
   <securityRealm class="hudson.security.PAMSecurityRealm">
     <serviceName>sshd</serviceName>
   </securityRealm>
+  <markupFormatter class="hudson.markup.RawHtmlMarkupFormatter"/>
   <jdks/>
   <viewsTabBar class="hudson.views.DefaultViewsTabBar"/>
   <myViewsTabBar class="hudson.views.DefaultMyViewsTabBar"/>

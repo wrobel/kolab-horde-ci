@@ -2,3 +2,6 @@
 /lastStable
 /lastSuccessful
 /nextBuildNumber
+*.tgz
+*.rpm
+*.spec

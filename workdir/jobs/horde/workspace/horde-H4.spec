@@ -3,7 +3,7 @@
 
 %define         V_pear_package horde
 %define         V_package_url http://pear.horde.org/horde
-%define         V_version 4.0.0dev201012061506
+%define         V_version 4.0.0dev201101302147
 %define         V_release 1
 %define         V_sourceurl http://files.kolab.org/incoming/wrobel/Horde4
 %define         V_php_lib_loc php-h4
@@ -36,9 +36,6 @@ Source9:        10-kolab_prefs_base.php
 Source10:       10-kolab_conf_base.php
 Source11:       horde.local.php
 Source12:       hook-delete_webmail4_user.php
-
-# List of patches
-Patch0:    package.patch
 
 # Build Info
 Prefix:	   %{l_prefix}
@@ -73,11 +70,9 @@ applications.
 
 	cat ../package.xml | sed -e 's/md5sum="[^"]*"//' > package.xml
 
-        if [ -n "`cat %{PATCH0}`" ]; then
-	    %patch -p1 -P 0
-	fi
-
-        sed -i -e 's#/usr/bin/env php#%{l_prefix}/bin/php#' bin/*
+        if [ -e bin ]; then
+          find bin -type f | xargs sed -i -e 's#/usr/bin/env php#%{l_prefix}/bin/php#'
+        fi
 
 %build
 
@@ -138,13 +133,6 @@ applications.
 	sed -i -e 's#@@@prefix@@@#%{l_prefix}#' $RPM_BUILD_ROOT%{l_prefix}/var/kolab/hooks/delete/hook-*
 	sed -i -e 's#@@@php_bin@@@#%{l_prefix}/bin/php#' $RPM_BUILD_ROOT%{l_prefix}/var/kolab/hooks/delete/hook-*
 
-
-        %{l_prefix}/bin/sqlite3 $RPM_BUILD_ROOT%{l_prefix}/var/kolab/webclient4_data/storage/horde.db < scripts/sql/horde_alarms.sql
-        %{l_prefix}/bin/sqlite3 $RPM_BUILD_ROOT%{l_prefix}/var/kolab/webclient4_data/storage/horde.db < scripts/sql/horde_datatree.sql
-        sed -i -e 's/AUTO_INCREMENT//' scripts/sql/horde_perms.sql
-        %{l_prefix}/bin/sqlite3 $RPM_BUILD_ROOT%{l_prefix}/var/kolab/webclient4_data/storage/horde.db < scripts/sql/horde_perms.sql
-        %{l_prefix}/bin/sqlite3 $RPM_BUILD_ROOT%{l_prefix}/var/kolab/webclient4_data/storage/horde.db < scripts/sql/horde_syncml.sql
-
 	for fl in $RPM_BUILD_ROOT%{l_prefix}/%{V_www_loc}/config/*.dist;do cp $fl ${fl/.dist/}; done
 
         %{l_rpmtool} files -v -ofiles -r$RPM_BUILD_ROOT %{l_files_std} \
@@ -155,10 +143,8 @@ applications.
             '%config %{l_prefix}/etc/kolab/templates/webclient4-config_nls.php.template' \
             '%config %{l_prefix}/etc/kolab/templates/webclient4-config_prefs.php.template' \
             '%config %{l_prefix}/etc/kolab/templates/webclient4-config_registry.php.template' \
-            '%config(noreplace) %{l_prefix}/var/kolab/webclient4_data/storage/horde.db' \
             %dir '%defattr(-,%{l_nusr},%{l_ngrp})' %{l_prefix}/var/kolab/webclient4_data/log \
             %dir '%defattr(-,%{l_nusr},%{l_ngrp})' %{l_prefix}/var/kolab/webclient4_data/storage \
-            %dir '%defattr(-,%{l_nusr},%{l_ngrp})' %{l_prefix}/var/kolab/webclient4_data/storage/horde.db \
             %dir '%defattr(-,%{l_nusr},%{l_ngrp})' %{l_prefix}/var/kolab/webclient4_data/tmp \
             %dir '%defattr(-,%{l_nusr},%{l_ngrp})' %{l_prefix}/var/kolab/webclient4_data/sessions \
 	    '%defattr(-,%{l_nusr},%{l_ngrp})' %{l_prefix}/var/kolab/www/client4/config/conf.php
