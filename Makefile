@@ -5,7 +5,10 @@ include horde-packaging/make/jobs.mk
 HORDE_FRAMEWORK=workdir/jobs/horde-git/workspace/framework
 TOOLSDIR=workdir/jobs/php-hudson-tools/workspace/pear/pear
 
-DEPENDENCIES=PEAR-PEAR-H4 \
+DEPENDENCIES=PEAR-PEAR-1.9.1 \
+             PEAR-Console_Getopt-1.2.3 \
+             PEAR-PEAR-H4 \
+             PEAR-Console_Getopt-H4 \
              PEAR-Horde-Channel \
              PEAR-Auth_SASL-H4 \
              PEAR-Crypt_Blowfish-H4 \
