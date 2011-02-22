@@ -1,9 +1,9 @@
 # Variables
 %define         V_package Horde_LoginTasks-H4
 
-%define         V_pear_package LoginTasks
-%define         V_package_url http://pear.horde.org/LoginTasks
-%define         V_version 0.1.0dev201101300449
+%define         V_pear_package Horde_LoginTasks
+%define         V_package_url http://pear.horde.org/Horde_LoginTasks
+%define         V_version 0.1.0dev201102221325
 %define         V_release 1
 %define         V_sourceurl http://files.kolab.org/incoming/wrobel/Horde4
 %define         V_php_lib_loc php-h4

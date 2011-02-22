@@ -2,7 +2,7 @@
 <?php if (in_array($package->getName(), array('content', 'horde', 'imp', 'ingo', 'kronolith', 'mnemo', 'nag', 'turba'))): ?>
 %define         V_package <?php echo $package->getName() . "-H4\n"; $target = $package->getName() . '-H4.spec'; ?>
 <?php else: ?>
-%define         V_package <?php if ($package->getName() == 'Role') {echo 'Horde_' . $package->getName() . "\n";  $target = 'Horde_' . $package->getName() . '.spec';} else {echo 'Horde_' . $package->getName() . "-H4\n";  $target = 'Horde_' . $package->getName() . '-H4.spec';} ?>
+%define         V_package <?php if ($package->getName() == 'Horde_Role') {echo $package->getName() . "\n";  $target = $package->getName() . '.spec';} else {echo $package->getName() . "-H4\n";  $target = $package->getName() . '-H4.spec';} ?>
 <?php endif; ?>
 
 %define         V_pear_package <?php echo $package->getName() . "\n"; ?>
@@ -10,7 +10,7 @@
 %define         V_version <?php echo $version . "\n"; ?>
 %define         V_release 1
 %define         V_sourceurl http://files.kolab.org/incoming/wrobel/Horde4
-%define         V_php_lib_loc <?php if ($package->getName() == 'Role') {echo "php\n";} else {echo "php-h4\n";} ?>
+%define         V_php_lib_loc <?php if ($package->getName() == 'Horde_Role') {echo "php\n";} else {echo "php-h4\n";} ?>
 %define         V_www_loc var/kolab/www/client4
 %define         V_summary <?php echo $package->getSummary() . "\n"; ?>
 %define         V_license <?php echo $package->getLicense() . "\n"; ?>
@@ -71,34 +71,29 @@ PreReq:       PEAR-Horde-Channel
 <?php
 $horde_deps = $package->getDependencyHelper()->listAllHordeDependencies();
 foreach ($horde_deps as $dep) {
-    if ($dep->isRequired() && !in_array($dep->name(), array('Core', 'DataTree', 'Kolab_Storage'))) {
-        if ($dep->name() == 'horde') {
-            echo 'PreReq: ' . $dep->name() . '-H4';
-            echo "\n";
-        } else {
-            echo 'PreReq: Horde_' . $dep->name() . '-H4';
-            echo "\n";
-        }
-    } else if (in_array($dep->name(), array('Test'))) {
-        echo 'PreReq: Horde_' . $dep->name() . '-H4';
+    if ($dep->isRequired() && !in_array($dep->name(), array('Horde_Core', 'Horde_DataTree', 'Horde_Kolab_Storage'))) {
+        echo 'PreReq: ' . $dep->name() . '-H4';
+        echo "\n";
+    } else if (in_array($dep->name(), array('Horde_Test'))) {
+        echo 'PreReq: ' . $dep->name() . '-H4';
         echo "\n";
     } else if (!$dep->isRequired()) {
         switch ($package->getName()) {
-        case 'Core':
-            if (in_array($dep->name(), array('Db', 'Kolab_Session', 'Kolab_Server', 'Tree', 'Http'))) {
-                echo 'PreReq: Horde_' . $dep->name() . '-H4';
+        case 'Horde_Core':
+            if (in_array($dep->name(), array('Horde_Db', 'Horde_Kolab_Session', 'Horde_Kolab_Server', 'Horde_Kolab_Storage', 'Horde_Tree', 'Horde_Http'))) {
+                echo 'PreReq: ' . $dep->name() . '-H4';
                 echo "\n";
             } else {
-                echo '#(Optional) PreReq: Horde_' . $dep->name() . '-H4';
+                echo '#(Optional) PreReq: ' . $dep->name() . '-H4';
                 echo "\n";
             }
             break;
         case 'horde':
-            if (in_array($dep->name(), array('Feed'))) {
-                echo 'PreReq: Horde_' . $dep->name() . '-H4';
+            if (in_array($dep->name(), array('Horde_Feed'))) {
+                echo 'PreReq: ' . $dep->name() . '-H4';
                 echo "\n";
             } else {
-                echo '#(Optional) PreReq: Horde_' . $dep->name() . '-H4';
+                echo '#(Optional) PreReq: ' . $dep->name() . '-H4';
                 echo "\n";
             }
             break;
@@ -158,7 +153,7 @@ foreach ($ext_deps as $dep) {
         else
           PHP_BIN_DIR="bin"
         fi
-        env PHP_PEAR_PHP_BIN="<?php if ($package->getName() == 'Role') {echo '/usr';} else {echo '%{l_prefix}';} ?>/bin/php -d safe_mode=off -d memory_limit=40M"\
+        env PHP_PEAR_PHP_BIN="<?php if ($package->getName() == 'Horde_Role') {echo '/usr';} else {echo '%{l_prefix}';} ?>/bin/php -d safe_mode=off -d memory_limit=40M"\
             PHP_PEAR_CACHE_DIR="/tmp/pear/cache"                                       \
 	    %{l_prefix}/bin/pear -d horde_dir="%{l_prefix}/%{V_www_loc}"               \
 	                         -d bin_dir="%{l_prefix}/$PHP_BIN_DIR"                 \

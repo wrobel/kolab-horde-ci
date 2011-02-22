@@ -1,9 +1,9 @@
 # Variables
 %define         V_package Horde_Mime-H4
 
-%define         V_pear_package Mime
-%define         V_package_url http://pear.horde.org/Mime
-%define         V_version 0.1.0dev201101300450
+%define         V_pear_package Horde_Mime
+%define         V_package_url http://pear.horde.org/Horde_Mime
+%define         V_version 0.1.0dev201102221325
 %define         V_release 1
 %define         V_sourceurl http://files.kolab.org/incoming/wrobel/Horde4
 %define         V_php_lib_loc php-h4
@@ -42,7 +42,6 @@ PreReq: Horde_Stream_Filter-H4
 PreReq: Horde_Support-H4
 PreReq: Horde_Util-H4
 PreReq: Horde_Translation-H4
-PreReq: PEAR-Net_SMTP-H4
 
 # Package options
 %option       with_chroot              no

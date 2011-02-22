@@ -1,9 +1,9 @@
 # Variables
 %define         V_package Horde_Perms-H4
 
-%define         V_pear_package Perms
-%define         V_package_url http://pear.horde.org/Perms
-%define         V_version 0.2.0dev201101300451
+%define         V_pear_package Horde_Perms
+%define         V_package_url http://pear.horde.org/Horde_Perms
+%define         V_version 0.2.0dev201102221326
 %define         V_release 1
 %define         V_sourceurl http://files.kolab.org/incoming/wrobel/Horde4
 %define         V_php_lib_loc php-h4

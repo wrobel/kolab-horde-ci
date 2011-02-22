@@ -1,9 +1,9 @@
 # Variables
 %define         V_package Horde_VFS-H4
 
-%define         V_pear_package VFS
-%define         V_package_url http://pear.horde.org/VFS
-%define         V_version 0.4.0dev201101300455
+%define         V_pear_package Horde_VFS
+%define         V_package_url http://pear.horde.org/Horde_VFS
+%define         V_version 0.4.0dev201102221328
 %define         V_release 1
 %define         V_sourceurl http://files.kolab.org/incoming/wrobel/Horde4
 %define         V_php_lib_loc php-h4

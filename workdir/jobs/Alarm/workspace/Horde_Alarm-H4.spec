@@ -1,9 +1,9 @@
 # Variables
 %define         V_package Horde_Alarm-H4
 
-%define         V_pear_package Alarm
-%define         V_package_url http://pear.horde.org/Alarm
-%define         V_version 0.2.0dev201101300441
+%define         V_pear_package Horde_Alarm
+%define         V_package_url http://pear.horde.org/Horde_Alarm
+%define         V_version 0.2.0dev201102221321
 %define         V_release 1
 %define         V_sourceurl http://files.kolab.org/incoming/wrobel/Horde4
 %define         V_php_lib_loc php-h4

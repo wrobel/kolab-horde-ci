@@ -1,6 +1,6 @@
-==========================================================
-Kolab/Horde continuous integration setup (based on Hudson)
-==========================================================
+===========================================================
+Kolab/Horde continuous integration setup (based on Jenkins)
+===========================================================
 
 Introduction
 ~~~~~~~~~~~~
@@ -34,7 +34,7 @@ followed by
 
 Now you should be able to connect to http://localhost:8080. You should
 now be able to login as a local user on your system. Finally you need
-to trigger the build on the "php-hudson-tools" jobs.
+to trigger the build on the "php-ci-tools" jobs.
 
 Usage
 ~~~~~

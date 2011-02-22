@@ -1,9 +1,9 @@
 # Variables
 %define         V_package Horde_Core-H4
 
-%define         V_pear_package Core
-%define         V_package_url http://pear.horde.org/Core
-%define         V_version 0.1.0dev201101300443
+%define         V_pear_package Horde_Core
+%define         V_package_url http://pear.horde.org/Horde_Core
+%define         V_version 0.1.0dev201102221322
 %define         V_release 1
 %define         V_sourceurl http://files.kolab.org/incoming/wrobel/Horde4
 %define         V_php_lib_loc php-h4
@@ -40,7 +40,6 @@ PreReq: Horde_ActiveSync-H4
 PreReq: Horde_Alarm-H4
 PreReq: Horde_Auth-H4
 PreReq: Horde_Autoloader-H4
-PreReq: Horde_Block-H4
 #(Optional) PreReq: Horde_Browser-H4
 PreReq: Horde_Cache-H4
 PreReq: Horde_Cli-H4
@@ -70,7 +69,7 @@ PreReq: Horde_Http-H4
 #(Optional) PreReq: Horde_Icalendar-H4
 PreReq: Horde_Kolab_Server-H4
 PreReq: Horde_Kolab_Session-H4
-#(Optional) PreReq: Horde_Kolab_Storage-H4
+PreReq: Horde_Kolab_Storage-H4
 #(Optional) PreReq: Horde_Nls-H4
 #(Optional) PreReq: Horde_Service_Twitter-H4
 #(Optional) PreReq: Horde_Text_Filter-H4

@@ -76,7 +76,7 @@ $conf['accounts']['params']['strip'] = false;
 
 $conf['kolab']['ldap']['server'] = 'localhost';
 $conf['kolab']['ldap']['port'] = 389;
-$conf['kolab']['imap']['port'] = 143;
+$conf['kolab']['imap']['port'] = 993;
 $conf['kolab']['imap']['sieveport'] = 2000;
 $conf['kolab']['imap']['cache_folders'] = true;
 $conf['kolab']['smtp']['server'] = 'localhost';

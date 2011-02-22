@@ -1,9 +1,9 @@
 # Variables
 %define         V_package Horde_Support-H4
 
-%define         V_pear_package Support
-%define         V_package_url http://pear.horde.org/Support
-%define         V_version 0.2.0dev201101300453
+%define         V_pear_package Horde_Support
+%define         V_package_url http://pear.horde.org/Horde_Support
+%define         V_version 0.2.0dev201102221327
 %define         V_release 1
 %define         V_sourceurl http://files.kolab.org/incoming/wrobel/Horde4
 %define         V_php_lib_loc php-h4
