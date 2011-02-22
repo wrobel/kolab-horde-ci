@@ -1,6 +1,6 @@
-[submodule "hudson"]
-	path = hudson
-	url = git://github.com/wrobel/hudson-install.git
+[submodule "jenkins"]
+	path = jenkins
+	url = git://github.com/wrobel/jenkins-install.git
 [submodule "horde-packaging"]
 	path = horde-packaging
 	url = git://github.com/wrobel/horde-packaging.git
