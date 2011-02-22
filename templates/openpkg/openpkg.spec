@@ -1,9 +1,9 @@
 # Variables
-<?php if (in_array($package->getName(), array('content', 'horde', 'imp', 'ingo', 'kronolith', 'mnemo', 'nag', 'turba'))): ?>
-%define         V_package <?php echo $package->getName() . "-H4\n"; $target = $package->getName() . '-H4.spec'; ?>
+<?php if (in_array($package->getName(), array('Content', 'Horde', 'IMP', 'Ingo', 'Kronolith', 'Mnemo', 'Nag', 'Turba'))): ?>
+%define         V_package <?php echo strtolower($package->getName()) . "-H4\n"; $target = strtolower($package->getName()) . '-H4.spec'; ?>
 <?php else: ?>
 %define         V_package <?php if ($package->getName() == 'Horde_Role') {echo $package->getName() . "\n";  $target = $package->getName() . '.spec';} else {echo $package->getName() . "-H4\n";  $target = $package->getName() . '-H4.spec';} ?>
-<?php endif; ?>
+<?php endif;?>
 
 %define         V_pear_package <?php echo $package->getName() . "\n"; ?>
 %define         V_package_url http://pear.horde.org/<?php echo $package->getName() . "\n"; ?>
@@ -28,7 +28,7 @@ Distribution:	OpenPKG
 
 # List of Sources
 Source:    %{V_sourceurl}/%{V_pear_package}-%{V_version}.tgz
-<?php if ($package->getName() == 'horde'): ?>
+<?php if ($package->getName() == 'Horde'): ?>
 Source1:        webclient4-config_conf.php.template
 Source2:        webclient4-config_hooks.php.template
 Source3:        webclient4-config_mime_drivers.php.template
@@ -42,7 +42,7 @@ Source10:       10-kolab_conf_base.php
 Source11:       horde.local.php
 Source12:       hook-delete_webmail4_user.php
 <?php endif; ?>
-<?php if ($package->getName() == 'imp'): ?>
+<?php if ($package->getName() == 'IMP'): ?>
 Source1:        webclient4-imp_backends.php.template
 Source2:        webclient4-imp_conf.php.template
 Source3:        webclient4-imp_header.php.template
@@ -72,8 +72,13 @@ PreReq:       PEAR-Horde-Channel
 $horde_deps = $package->getDependencyHelper()->listAllHordeDependencies();
 foreach ($horde_deps as $dep) {
     if ($dep->isRequired() && !in_array($dep->name(), array('Horde_Core', 'Horde_DataTree', 'Horde_Kolab_Storage'))) {
-        echo 'PreReq: ' . $dep->name() . '-H4';
-        echo "\n";
+        if (in_array($dep->name(), array('Horde', 'Content'))) {
+            echo 'PreReq: ' . strtolower($dep->name()) . '-H4';
+            echo "\n";
+        } else {
+            echo 'PreReq: ' . $dep->name() . '-H4';
+            echo "\n";
+        }
     } else if (in_array($dep->name(), array('Horde_Test'))) {
         echo 'PreReq: ' . $dep->name() . '-H4';
         echo "\n";
@@ -88,7 +93,7 @@ foreach ($horde_deps as $dep) {
                 echo "\n";
             }
             break;
-        case 'horde':
+        case 'Horde':
             if (in_array($dep->name(), array('Horde_Feed'))) {
                 echo 'PreReq: ' . $dep->name() . '-H4';
                 echo "\n";
@@ -172,7 +177,7 @@ foreach ($ext_deps as $dep) {
                 cp -a $RPM_BUILD_ROOT/%{l_prefix}/lib/%{V_php_lib_loc} $RPM_BUILD_ROOT%{l_prefix}/var/kolab/www/%{l_prefix}/lib/
         %endif
 
-<?php if ($package->getName() == 'horde'): ?>
+<?php if ($package->getName() == 'Horde'): ?>
 	%{l_shtool} install -d $RPM_BUILD_ROOT%{l_prefix}/var/kolab/hooks/delete
 	%{l_shtool} install -d $RPM_BUILD_ROOT%{l_prefix}/var/kolab/webclient4_data/storage
 	%{l_shtool} install -d $RPM_BUILD_ROOT%{l_prefix}/var/kolab/webclient4_data/log
@@ -204,7 +209,7 @@ foreach ($ext_deps as $dep) {
 
 	for fl in $RPM_BUILD_ROOT%{l_prefix}/%{V_www_loc}/config/*.dist;do cp $fl ${fl/.dist/}; done
 <?php endif; ?>
-<?php if ($package->getName() == 'imp'): ?>
+<?php if ($package->getName() == 'IMP'): ?>
 	%{l_shtool} install -d $RPM_BUILD_ROOT%{l_prefix}/etc/kolab/templates	
 	%{l_shtool} install -d $RPM_BUILD_ROOT%{l_prefix}/%{V_www_loc}/imp/config/backends.d
 	%{l_shtool} install -d $RPM_BUILD_ROOT%{l_prefix}/%{V_www_loc}/imp/config/conf.d
@@ -228,7 +233,7 @@ foreach ($ext_deps as $dep) {
 <?php endif; ?>
 
         %{l_rpmtool} files -v -ofiles -r$RPM_BUILD_ROOT %{l_files_std} \
-<?php if ($package->getName() == 'horde'): ?>
+<?php if ($package->getName() == 'Horde'): ?>
 	    '%config %{l_prefix}/etc/kolab/templates/webclient4-config_conf.php.template' \
             '%config %{l_prefix}/etc/kolab/templates/webclient4-config_hooks.php.template' \
             '%config %{l_prefix}/etc/kolab/templates/webclient4-config_mime_drivers.php.template' \
@@ -242,7 +247,7 @@ foreach ($ext_deps as $dep) {
             %dir '%defattr(-,%{l_nusr},%{l_ngrp})' %{l_prefix}/var/kolab/webclient4_data/sessions \
 	    '%defattr(-,%{l_nusr},%{l_ngrp})' %{l_prefix}/var/kolab/www/client4/config/conf.php
 <?php endif; ?>
-<?php if ($package->getName() == 'imp'): ?>
+<?php if ($package->getName() == 'IMP'): ?>
             '%config %{l_prefix}/etc/kolab/templates/webclient4-imp_backends.php.template' \
 	    '%config %{l_prefix}/etc/kolab/templates/webclient4-imp_conf.php.template' \
             '%config %{l_prefix}/etc/kolab/templates/webclient4-imp_header.php.template' \

@@ -3,7 +3,7 @@
 
 %define         V_pear_package Horde_Cache
 %define         V_package_url http://pear.horde.org/Horde_Cache
-%define         V_version 0.2.1dev201102221321
+%define         V_version 0.2.1dev201102221422
 %define         V_release 1
 %define         V_sourceurl http://files.kolab.org/incoming/wrobel/Horde4
 %define         V_php_lib_loc php-h4
