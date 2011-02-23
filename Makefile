@@ -17,6 +17,7 @@ DEPENDENCIES=PEAR-PEAR-1.9.1 \
              PEAR-Mail-H4 \
              PEAR-Net_SMTP-H4 \
              PEAR-Net_Socket-H4 \
+             PEAR-Date-H4 \
              PEAR-PHPUnit-Channel-H4 \
              PHPUnit-H4
 
